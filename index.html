@@ -1,9 +1,9 @@
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Impostor Premium - V2</title>
+    <title>Impostor Premium - Super Lista</title>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap');
@@ -16,24 +16,11 @@
             --grad: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
         }
 
-        * {
-            margin: 0; padding: 0; box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
-            -webkit-tap-highlight-color: transparent;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
 
-        body {
-            background-color: #121212;
-            display: flex; justify-content: center; align-items: center;
-            height: 100vh; overflow: hidden;
-        }
+        body { background-color: #121212; display: flex; justify-content: center; align-items: center; height: 100vh; overflow: hidden; }
 
-        #app {
-            background-color: var(--bg-card);
-            width: 100%; max-width: 400px; height: 100%;
-            display: flex; flex-direction: column;
-            padding: 30px; position: relative;
-        }
+        #app { background-color: var(--bg-card); width: 100%; max-width: 400px; height: 100%; display: flex; flex-direction: column; padding: 30px; position: relative; }
 
         #app.dark-mode { background-color: var(--bg-dark); color: #fff; }
 
@@ -47,16 +34,11 @@
         .title { font-size: 32px; font-weight: 900; line-height: 1.1; margin-bottom: 15px; text-align: center; }
         .subtitle { font-size: 15px; color: #666; margin-bottom: 30px; text-align: center; }
 
-        .btn-main {
-            background: #121212; color: white; padding: 18px; border-radius: 20px;
-            border: none; font-weight: 700; font-size: 17px;
-            display: flex; justify-content: space-between; align-items: center;
-            cursor: pointer; width: 100%; margin-top: 20px;
-        }
+        .btn-main { background: #121212; color: white; padding: 18px; border-radius: 20px; border: none; font-weight: 700; font-size: 17px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; width: 100%; margin-top: 20px; }
         .btn-main .icon { background: white; color: black; width: 28px; height: 28px; border-radius: 50%; display: flex; justify-content: center; align-items: center; }
         
         .grid-players { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px; }
-        .opt-btn { background: white; border: 1px solid #ddd; padding: 15px; border-radius: 15px; font-weight: 700; text-align: center; }
+        .opt-btn { background: white; border: 1px solid #ddd; padding: 15px; border-radius: 15px; font-weight: 700; text-align: center; color: #000; }
         .opt-btn.selected { background: #000; color: #fff; }
 
         .name-list { overflow-y: auto; max-height: 50%; margin-bottom: 20px; }
@@ -64,48 +46,48 @@
         .input-group input { background: transparent; border: none; font-weight: 600; width: 100%; outline: none; margin-left: 10px; }
 
         .themes-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; max-height: 60%; overflow-y: auto; padding: 10px 0; }
-        .theme-card { background: var(--card-dark); border-radius: 18px; padding: 15px; border: 2px solid transparent; transition: 0.3s; display: flex; flex-direction: column; align-items: center; }
+        .theme-card { background: var(--card-dark); border-radius: 18px; padding: 15px; border: 2px solid transparent; transition: 0.3s; display: flex; flex-direction: column; align-items: center; text-align: center; }
         .theme-card.selected { border-color: var(--accent); background: rgba(99, 102, 241, 0.2); }
         .icon-box { width: 45px; height: 45px; border-radius: 10px; background: #334155; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; color: #fff; }
         .theme-name { font-weight: 700; font-size: 14px; color: #fff; }
 
         .reveal-card { background: #f9f9f9; border-radius: 30px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 40px 20px; border: 1px solid #eee; }
-        .animal-text { font-size: 40px; font-weight: 900; color: var(--accent); display: none; margin-top: 15px; }
+        .animal-text { font-size: 35px; font-weight: 900; color: var(--accent); display: none; margin-top: 15px; text-transform: uppercase; }
     </style>
 </head>
 <body>
 
 <div id="app">
-    <!-- TELA 1: INÍCIO -->
+    <!-- P1: INÍCIO -->
     <div id="page1" class="page active">
-        <div class="badge">Modo Animal</div>
+        <div class="badge">Impostor Premium</div>
         <h1 class="title">Pronto pra descobrir o impostor?</h1>
-        <p class="subtitle">A ordem dos jogadores agora é totalmente aleatória!</p>
+        <p class="subtitle">Agora com temas de Objetos, Animais e Desenhos!</p>
         <button class="btn-main" onclick="goToPage(2)">JOGAR <span class="icon">→</span></button>
     </div>
 
-    <!-- TELA 2: QUANTIDADE -->
+    <!-- P2: QUANTIDADE -->
     <div id="page2" class="page">
         <h1 class="title">Quantos jogadores?</h1>
         <div class="grid-players" id="playerGrid"></div>
         <button class="btn-main" id="btnNext2" style="display:none" onclick="setupNames()">CONTINUAR <span class="icon">→</span></button>
     </div>
 
-    <!-- TELA 3: NOMES -->
+    <!-- P3: NOMES -->
     <div id="page3" class="page">
         <h1 class="title">Quem vai jogar?</h1>
         <div class="name-list" id="nameList"></div>
         <button class="btn-main" onclick="goToPage('Themes')">ESCOLHER TEMA <span class="icon">→</span></button>
     </div>
 
-    <!-- TELA 4: TEMAS -->
+    <!-- P4: TEMAS -->
     <div id="pageThemes" class="page">
         <h1 class="title" style="color:#fff">Escolha o Tema</h1>
         <div class="themes-grid" id="themesGrid"></div>
         <button class="btn-main" style="background:var(--grad)" onclick="prepareGame()">INICIAR RODADA <span class="icon">🔥</span></button>
     </div>
 
-    <!-- TELA 5: REVELAÇÃO -->
+    <!-- P5: REVELAÇÃO -->
     <div id="pageReveal" class="page">
         <div class="badge" id="revealStatus" style="justify-content: center;">Vez de</div>
         <h1 class="title" id="currentPlayerName">Jogador</h1>
@@ -116,10 +98,10 @@
         <button class="btn-main" id="revealBtn" onclick="toggleReveal()">VER PALAVRA <span class="icon">👁️</span></button>
     </div>
 
-    <!-- TELA 6: FIM -->
+    <!-- P6: FIM -->
     <div id="pageEnd" class="page">
         <h1 class="title">Discussão!</h1>
-        <p class="subtitle">Debatam e descubram o impostor.</p>
+        <p class="subtitle">Quem é o impostor?</p>
         <button class="btn-main" style="background:var(--grad)" onclick="goToPage('Themes')">JOGAR NOVAMENTE <span class="icon">↺</span></button>
         <button class="btn-main" style="background:#666" onclick="location.reload()">TROCAR JOGADORES <span class="icon">👤</span></button>
     </div>
@@ -127,16 +109,13 @@
 
 <script>
     const THEMES = [
-        { id: 'animais', name: 'Animais', icon: 'dog', pairs: [['Leão', 'Onça'], ['Cachorro', 'Lobo'], ['Gato', 'Lince'], ['Tigre', 'Leopardo']] },
-        { id: 'comidas', name: 'Comidas', icon: 'utensils', pairs: [['Pizza', 'Lasanha'], ['Burger', 'X-Burger'], ['Sushi', 'Temaki']] },
-        { id: 'paises', name: 'Países', icon: 'globe', pairs: [['Brasil', 'Argentina'], ['Japão', 'China'], ['Canadá', 'EUA']] },
-        { id: 'filmes', name: 'Filmes', icon: 'film', pairs: [['Batman', 'Superman'], ['Shrek', 'Hulk'], ['Frozen', 'Encanto']] },
-        { id: 'marcas', name: 'Marcas', icon: 'tag', pairs: [['Nike', 'Adidas'], ['Samsung', 'iPhone'], ['Coca', 'Pepsi']] }
+        { id: 'animais', name: 'Animais', icon: 'dog', pairs: [['Cachorro', 'Lobo'], ['Gato', 'Pantera'], ['Leão', 'Tigre'], ['Zebra', 'Cavalo'], ['Jacaré', 'Crocodilo'], ['Golfinho', 'Tubarão'], ['Baleia', 'Golfinho'], ['Cobra', 'Minhoca'], ['Urso', 'Panda'], ['Macaco', 'Chimpanzé'], ['Camelo', 'Lhama'], ['Rinoceronte', 'Hipopótamo'], ['Águia', 'Falcão'], ['Coruja', 'Morcego'], ['Galinha', 'Peru'], ['Pato', 'Ganso'], ['Sapo', 'Rã'], ['Ovelha', 'Cabra'], ['Coelho', 'Hamster'], ['Formiga', 'Cupim'], ['Abelha', 'Vespa'], ['Escorpião', 'Aranha'], ['Polvo', 'Lula'], ['Cavalo-marinho', 'Peixe'], ['Pinguim', 'Foca'], ['Pavão', 'Avestruz'], ['Papagaio', 'Arara'], ['Tartaruga', 'Jabuti'], ['Porco', 'Javali'], ['Cervo', 'Alce']] },
+        { id: 'desenhos', name: 'Desenhos', icon: 'tv', pairs: [['Mickey', 'Minnie'], ['Pato Donald', 'Pateta'], ['Toy Story', 'Carros'], ['Shrek', 'Madagascar'], ['Kung Fu Panda', 'Panda do Kung Fu'], ['Ben 10', 'Generator Rex'], ['Hora de Aventura', 'Apenas um Show'], ['Bob Esponja', 'Patrick'], ['Scooby-Doo', 'Coragem'], ['Os Simpsons', 'Futurama'], ['South Park', 'Family Guy'], ['Dragon Ball', 'Naruto'], ['Naruto', 'Boruto'], ['Pokémon', 'Digimon'], ['Yu-Gi-Oh', 'Beyblade'], ['Avatar', 'Korra'], ['Teen Titans', 'Jovens Titãs'], ['Liga da Justiça', 'Vingadores'], ['Homem-Aranha', 'Batman'], ['Frozen', 'Encantada'], ['Moana', 'Raya'], ['Lilo & Stitch', 'Big Hero'], ['Divertidamente', 'Soul'], ['Wall-E', 'Robôs'], ['Monstros S.A.', 'Universidade Monstros'], ['Procurando Nemo', 'Procurando Dory'], ['Os Incríveis', 'Megamente'], ['A Era do Gelo', 'Rio'], ['Tom & Jerry', 'Piu Piu e Frajola'], ['Looney Tunes', 'Animaniacs']] },
+        { id: 'objetos', name: 'Objetos', icon: 'package', pairs: [['Cadeira', 'Banco'], ['Sofá', 'Poltrona'], ['Mesa', 'Escrivaninha'], ['Geladeira', 'Freezer'], ['Fogão', 'Microondas'], ['Televisão', 'Monitor'], ['Controle', 'Joystick'], ['Mouse', 'Teclado'], ['Notebook', 'Tablet'], ['Celular', 'Iphone'], ['Ventilador', 'Ar-condicionado'], ['Espelho', 'Vidro'], ['Janela', 'Porta'], ['Lâmpada', 'Lanterna'], ['Relógio', 'Cronômetro'], ['Caneta', 'Lápis'], ['Caderno', 'Livro'], ['Mochila', 'Mala'], ['Óculos', 'Lente'], ['Fone', 'Headset'], ['Carregador', 'Cabo'], ['Martelo', 'Marreta'], ['Parafuso', 'Prego'], ['Tesoura', 'Estilete'], ['Escova', 'Pente'], ['Travesseiro', 'Almofada'], ['Chuveiro', 'Torneira'], ['Garrafa', 'Copo'], ['Panela', 'Frigideira'], ['Vassoura', 'Rodo']] }
     ];
 
     let playerCount = 0, playerList = [], currentIdx = 0, isShowing = false, selectedTheme = null;
 
-    // Grid de Jogadores
     const pGrid = document.getElementById('playerGrid');
     for(let i=3; i<=10; i++) {
         const b = document.createElement('div'); b.className='opt-btn'; b.innerText=i;
@@ -144,7 +123,6 @@
         pGrid.appendChild(b);
     }
 
-    // Grid de Temas
     const tGrid = document.getElementById('themesGrid');
     THEMES.forEach(t => {
         const card = document.createElement('div'); card.className='theme-card';
@@ -176,14 +154,11 @@
         const impIdx = Math.floor(Math.random()*playerCount);
         const flip = Math.random() > 0.5;
 
-        // Criar lista de jogadores com os nomes atuais
         for(let i=0; i<playerCount; i++) {
             playerList.push({ name: document.getElementById('pn'+(i+1)).value, word: (i === impIdx) ? pair[flip?1:0] : pair[flip?0:1] });
         }
 
-        // EMBARALHAR ORDEM (A vez de quem pega o celular é aleatória)
         playerList.sort(() => Math.random() - 0.5);
-        
         currentIdx = 0;
         updateReveal();
         goToPage('Reveal');
@@ -213,4 +188,3 @@
 </script>
 </body>
 </html>
-   
