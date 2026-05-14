@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Impostor Premium - Full Edition</title>
+    <title>Impostor Premium - V2</title>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap');
@@ -13,8 +13,6 @@
             --bg-card: #fdfdfb;
             --card-dark: #1e293b;
             --accent: #6366f1;
-            --text-main: #000000;
-            --text-sec: #666666;
             --grad: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
         }
 
@@ -35,58 +33,44 @@
             width: 100%; max-width: 400px; height: 100%;
             display: flex; flex-direction: column;
             padding: 30px; position: relative;
-            transition: all 0.5s ease;
         }
 
-        /* Ajuste de fundo para tema escuro na seleção */
         #app.dark-mode { background-color: var(--bg-dark); color: #fff; }
 
-        .page { display: none; flex-direction: column; height: 100%; animation: fadeIn 0.4s ease; }
+        .page { display: none; flex-direction: column; height: 100%; animation: fadeIn 0.4s ease; justify-content: center; }
         .active { display: flex; }
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Estilos Gerais */
         .badge { font-size: 11px; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px; display: flex; align-items: center; }
         .badge::before { content: ''; width: 8px; height: 8px; background: currentColor; border-radius: 50%; margin-right: 8px; }
-        .title { font-size: 32px; font-weight: 900; line-height: 1.1; margin-bottom: 15px; }
-        .subtitle { font-size: 15px; color: var(--text-sec); margin-bottom: 30px; }
+        .title { font-size: 32px; font-weight: 900; line-height: 1.1; margin-bottom: 15px; text-align: center; }
+        .subtitle { font-size: 15px; color: #666; margin-bottom: 30px; text-align: center; }
 
-        /* Botões */
         .btn-main {
-            background: #121212; color: white; padding: 20px; border-radius: 20px;
+            background: #121212; color: white; padding: 18px; border-radius: 20px;
             border: none; font-weight: 700; font-size: 17px;
             display: flex; justify-content: space-between; align-items: center;
-            cursor: pointer; margin-top: auto;
+            cursor: pointer; width: 100%; margin-top: 20px;
         }
         .btn-main .icon { background: white; color: black; width: 28px; height: 28px; border-radius: 50%; display: flex; justify-content: center; align-items: center; }
         
-        /* Grid de Jogadores */
         .grid-players { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px; }
         .opt-btn { background: white; border: 1px solid #ddd; padding: 15px; border-radius: 15px; font-weight: 700; text-align: center; }
         .opt-btn.selected { background: #000; color: #fff; }
 
-        /* Inputs Nomes */
-        .name-list { overflow-y: auto; flex-grow: 1; margin-bottom: 20px; }
-        .input-group { background: #f1f1f1; padding: 12px; border-radius: 12px; margin-bottom: 8px; display: flex; align-items: center; }
+        .name-list { overflow-y: auto; max-height: 50%; margin-bottom: 20px; }
+        .input-group { background: #f1f1f1; padding: 12px; border-radius: 12px; margin-bottom: 8px; display: flex; align-items: center; color: #000; }
         .input-group input { background: transparent; border: none; font-weight: 600; width: 100%; outline: none; margin-left: 10px; }
 
-        /* NOVO: Grid de Temas (Premium Dark) */
-        .themes-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; overflow-y: auto; padding-bottom: 20px; }
-        .theme-card { 
-            background: var(--card-dark); border-radius: 18px; padding: 15px; 
-            border: 2px solid transparent; transition: 0.3s; display: flex; 
-            flex-direction: column; align-items: center; text-align: center;
-        }
+        .themes-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; max-height: 60%; overflow-y: auto; padding: 10px 0; }
+        .theme-card { background: var(--card-dark); border-radius: 18px; padding: 15px; border: 2px solid transparent; transition: 0.3s; display: flex; flex-direction: column; align-items: center; }
         .theme-card.selected { border-color: var(--accent); background: rgba(99, 102, 241, 0.2); }
         .icon-box { width: 45px; height: 45px; border-radius: 10px; background: #334155; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; color: #fff; }
-        .selected .icon-box { background: var(--grad); }
         .theme-name { font-weight: 700; font-size: 14px; color: #fff; }
-        .theme-desc { font-size: 10px; color: #94a3b8; }
 
-        /* Revelação */
-        .reveal-card { flex-grow: 1; background: #f9f9f9; border-radius: 30px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; margin-bottom: 20px; padding: 20px; }
-        .animal-text { font-size: 45px; font-weight: 900; color: var(--accent); display: none; }
+        .reveal-card { background: #f9f9f9; border-radius: 30px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 40px 20px; border: 1px solid #eee; }
+        .animal-text { font-size: 40px; font-weight: 900; color: var(--accent); display: none; margin-top: 15px; }
     </style>
 </head>
 <body>
@@ -96,95 +80,76 @@
     <div id="page1" class="page active">
         <div class="badge">Modo Animal</div>
         <h1 class="title">Pronto pra descobrir o impostor?</h1>
-        <p class="subtitle">Passe o celular entre os jogadores sem mostrar sua tela.</p>
+        <p class="subtitle">A ordem dos jogadores agora é totalmente aleatória!</p>
         <button class="btn-main" onclick="goToPage(2)">JOGAR <span class="icon">→</span></button>
     </div>
 
     <!-- TELA 2: QUANTIDADE -->
     <div id="page2" class="page">
-        <div class="badge">Configuração</div>
-        <h1 class="title">Quantos vão jogar?</h1>
+        <h1 class="title">Quantos jogadores?</h1>
         <div class="grid-players" id="playerGrid"></div>
         <button class="btn-main" id="btnNext2" style="display:none" onclick="setupNames()">CONTINUAR <span class="icon">→</span></button>
     </div>
 
     <!-- TELA 3: NOMES -->
     <div id="page3" class="page">
-        <div class="badge">Identificação</div>
-        <h1 class="title">Quem está jogando?</h1>
+        <h1 class="title">Quem vai jogar?</h1>
         <div class="name-list" id="nameList"></div>
-        <button class="btn-main" onclick="goToThemes()">ESCOLHER TEMA <span class="icon">→</span></button>
+        <button class="btn-main" onclick="goToPage('Themes')">ESCOLHER TEMA <span class="icon">→</span></button>
     </div>
 
-    <!-- NOVO TELA 4: TEMAS (DARK) -->
+    <!-- TELA 4: TEMAS -->
     <div id="pageThemes" class="page">
-        <div class="badge" style="color:#94a3b8">Categorias</div>
-        <h1 class="title" style="color:#fff">Escolha um Tema</h1>
+        <h1 class="title" style="color:#fff">Escolha o Tema</h1>
         <div class="themes-grid" id="themesGrid"></div>
-        <button class="btn-main" style="background:var(--grad)" id="btnStartGame" onclick="prepareGame()">COMEÇAR PARTIDA <span class="icon">→</span></button>
+        <button class="btn-main" style="background:var(--grad)" onclick="prepareGame()">INICIAR RODADA <span class="icon">🔥</span></button>
     </div>
 
     <!-- TELA 5: REVELAÇÃO -->
     <div id="pageReveal" class="page">
-        <div class="badge" id="revealStatus">Vez de</div>
+        <div class="badge" id="revealStatus" style="justify-content: center;">Vez de</div>
         <h1 class="title" id="currentPlayerName">Jogador</h1>
         <div class="reveal-card">
             <p id="instructionText">Pegue o celular e veja sua palavra.</p>
-            <div id="wordDisplay" class="animal-text">PALAVRA</div>
+            <div id="wordDisplay" class="animal-text">---</div>
         </div>
         <button class="btn-main" id="revealBtn" onclick="toggleReveal()">VER PALAVRA <span class="icon">👁️</span></button>
     </div>
 
     <!-- TELA 6: FIM -->
     <div id="pageEnd" class="page">
-        <div class="badge">O Jogo Começou</div>
-        <h1 class="title">Todos viram?</h1>
-        <p class="subtitle">Debatam e descubram o impostor! Ele tem uma palavra levemente diferente.</p>
-        <button class="btn-main" onclick="location.reload()">NOVO JOGO <span class="icon">↺</span></button>
+        <h1 class="title">Discussão!</h1>
+        <p class="subtitle">Debatam e descubram o impostor.</p>
+        <button class="btn-main" style="background:var(--grad)" onclick="goToPage('Themes')">JOGAR NOVAMENTE <span class="icon">↺</span></button>
+        <button class="btn-main" style="background:#666" onclick="location.reload()">TROCAR JOGADORES <span class="icon">👤</span></button>
     </div>
 </div>
 
 <script>
     const THEMES = [
-        { id: 'animais', name: 'Animais', icon: 'dog', desc: 'De leões a lobos selvagens', pairs: [['Leão', 'Onça'], ['Cachorro', 'Lobo'], ['Gato', 'Lince'], ['Tigre', 'Leopardo'], ['Cavalo', 'Zebra']] },
-        { id: 'comidas', name: 'Comidas', icon: 'utensils', desc: 'Lanches e pratos típicos', pairs: [['Pizza', 'Lasanha'], ['Hambúrguer', 'X-Burger'], ['Bolo', 'Torta'], ['Sushi', 'Temaki'], ['Pastel', 'Coxinha']] },
-        { id: 'paises', name: 'Países', icon: 'globe', desc: 'Nações e vizinhos', pairs: [['Brasil', 'Argentina'], ['Japão', 'China'], ['Canadá', 'EUA'], ['Espanha', 'Portugal'], ['França', 'Itália']] },
-        { id: 'filmes', name: 'Filmes', icon: 'film', desc: 'Blockbusters e heróis', pairs: [['Batman', 'Superman'], ['Shrek', 'Hulk'], ['Star Wars', 'Star Trek'], ['Toy Story', 'Carros']] },
-        { id: 'objetos', name: 'Objetos', icon: 'package', desc: 'Itens do dia a dia', pairs: [['Mesa', 'Escrivaninha'], ['Celular', 'Tablet'], ['Fone', 'Headset'], ['Caneta', 'Lápis']] },
-        { id: 'marcas', name: 'Marcas', icon: 'tag', desc: 'Grandes corporações', pairs: [['Nike', 'Adidas'], ['Samsung', 'iPhone'], ['Ferrari', 'Lamborghini'], ['Netflix', 'Disney+']] }
+        { id: 'animais', name: 'Animais', icon: 'dog', pairs: [['Leão', 'Onça'], ['Cachorro', 'Lobo'], ['Gato', 'Lince'], ['Tigre', 'Leopardo']] },
+        { id: 'comidas', name: 'Comidas', icon: 'utensils', pairs: [['Pizza', 'Lasanha'], ['Burger', 'X-Burger'], ['Sushi', 'Temaki']] },
+        { id: 'paises', name: 'Países', icon: 'globe', pairs: [['Brasil', 'Argentina'], ['Japão', 'China'], ['Canadá', 'EUA']] },
+        { id: 'filmes', name: 'Filmes', icon: 'film', pairs: [['Batman', 'Superman'], ['Shrek', 'Hulk'], ['Frozen', 'Encanto']] },
+        { id: 'marcas', name: 'Marcas', icon: 'tag', pairs: [['Nike', 'Adidas'], ['Samsung', 'iPhone'], ['Coca', 'Pepsi']] }
     ];
 
-    let playerCount = 0;
-    let players = [];
-    let currentIdx = 0;
-    let isShowing = false;
-    let selectedTheme = null;
+    let playerCount = 0, playerList = [], currentIdx = 0, isShowing = false, selectedTheme = null;
 
-    // Inicializar Grade de Jogadores
+    // Grid de Jogadores
     const pGrid = document.getElementById('playerGrid');
     for(let i=3; i<=10; i++) {
-        const b = document.createElement('div');
-        b.className = 'opt-btn'; b.innerText = i;
-        b.onclick = () => {
-            playerCount = i;
-            document.querySelectorAll('.opt-btn').forEach(x => x.classList.remove('selected'));
-            b.classList.add('selected');
-            document.getElementById('btnNext2').style.display = 'flex';
-        };
+        const b = document.createElement('div'); b.className='opt-btn'; b.innerText=i;
+        b.onclick = () => { playerCount=i; document.querySelectorAll('.opt-btn').forEach(x=>x.classList.remove('selected')); b.classList.add('selected'); document.getElementById('btnNext2').style.display='flex'; };
         pGrid.appendChild(b);
     }
 
-    // Inicializar Grade de Temas
+    // Grid de Temas
     const tGrid = document.getElementById('themesGrid');
     THEMES.forEach(t => {
-        const card = document.createElement('div');
-        card.className = 'theme-card';
-        card.innerHTML = `<div class="icon-box"><i data-lucide="${t.icon}"></i></div><div class="theme-name">${t.name}</div><div class="theme-desc">${t.desc}</div>`;
-        card.onclick = () => {
-            selectedTheme = t;
-            document.querySelectorAll('.theme-card').forEach(c => c.classList.remove('selected'));
-            card.classList.add('selected');
-        };
+        const card = document.createElement('div'); card.className='theme-card';
+        card.innerHTML = `<div class="icon-box"><i data-lucide="${t.icon}"></i></div><div class="theme-name">${t.name}</div>`;
+        card.onclick = () => { selectedTheme=t; document.querySelectorAll('.theme-card').forEach(c=>c.classList.remove('selected')); card.classList.add('selected'); };
         tGrid.appendChild(card);
     });
     lucide.createIcons();
@@ -192,51 +157,41 @@
     function goToPage(n) {
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
         document.getElementById('app').classList.remove('dark-mode');
-        
-        if(n === 'Themes') {
-            document.getElementById('pageThemes').classList.add('active');
-            document.getElementById('app').classList.add('dark-mode');
-        } else if (n === 'Reveal') {
-            document.getElementById('pageReveal').classList.add('active');
-        } else if (n === 'End') {
-            document.getElementById('pageEnd').classList.add('active');
-        } else {
-            document.getElementById('page' + n).classList.add('active');
-        }
+        if(n === 'Themes') { document.getElementById('pageThemes').classList.add('active'); document.getElementById('app').classList.add('dark-mode'); }
+        else if (n === 'Reveal') document.getElementById('pageReveal').classList.add('active');
+        else if (n === 'End') document.getElementById('pageEnd').classList.add('active');
+        else document.getElementById('page' + n).classList.add('active');
     }
 
     function setupNames() {
-        const list = document.getElementById('nameList');
-        list.innerHTML = '';
-        for(let i=1; i<=playerCount; i++) {
-            list.innerHTML += `<div class="input-group"><span>${i}</span><input type="text" value="Jogador ${i}" id="pn${i}"></div>`;
-        }
+        const list = document.getElementById('nameList'); list.innerHTML = '';
+        for(let i=1; i<=playerCount; i++) list.innerHTML += `<div class="input-group"><input type="text" value="Jogador ${i}" id="pn${i}"></div>`;
         goToPage(3);
     }
 
-    function goToThemes() { goToPage('Themes'); }
-
     function prepareGame() {
-        if(!selectedTheme) return alert("Escolha um tema!");
-        players = [];
-        const pair = selectedTheme.pairs[Math.floor(Math.random() * selectedTheme.pairs.length)];
-        const impIdx = Math.floor(Math.random() * playerCount);
+        if(!selectedTheme) return alert("Selecione um tema!");
+        playerList = [];
+        const pair = selectedTheme.pairs[Math.floor(Math.random()*selectedTheme.pairs.length)];
+        const impIdx = Math.floor(Math.random()*playerCount);
         const flip = Math.random() > 0.5;
 
+        // Criar lista de jogadores com os nomes atuais
         for(let i=0; i<playerCount; i++) {
-            players.push({
-                name: document.getElementById('pn'+(i+1)).value,
-                word: (i === impIdx) ? pair[flip ? 1 : 0] : pair[flip ? 0 : 1]
-            });
+            playerList.push({ name: document.getElementById('pn'+(i+1)).value, word: (i === impIdx) ? pair[flip?1:0] : pair[flip?0:1] });
         }
+
+        // EMBARALHAR ORDEM (A vez de quem pega o celular é aleatória)
+        playerList.sort(() => Math.random() - 0.5);
+        
         currentIdx = 0;
         updateReveal();
         goToPage('Reveal');
     }
 
     function updateReveal() {
-        document.getElementById('currentPlayerName').innerText = players[currentIdx].name;
-        document.getElementById('wordDisplay').innerText = players[currentIdx].word;
+        document.getElementById('currentPlayerName').innerText = playerList[currentIdx].name;
+        document.getElementById('wordDisplay').innerText = playerList[currentIdx].word;
         document.getElementById('wordDisplay').style.display = 'none';
         document.getElementById('instructionText').style.display = 'block';
         document.getElementById('revealBtn').innerHTML = `VER PALAVRA <span class="icon">👁️</span>`;
@@ -251,14 +206,11 @@
             isShowing = true;
         } else {
             currentIdx++;
-            if(currentIdx < players.length) {
-                updateReveal();
-            } else {
-                goToPage('End');
-            }
+            if(currentIdx < playerList.length) updateReveal();
+            else goToPage('End');
         }
     }
 </script>
 </body>
 </html>
-
+   
