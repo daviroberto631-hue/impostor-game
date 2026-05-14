@@ -31,20 +31,18 @@
             border-radius: 40px; position: relative;
             display: flex; flex-direction: column;
             padding: 40px 25px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
-            margin: auto; overflow: hidden; /* Corta animações que saem do card */
+            margin: auto; overflow: hidden;
         }
 
-        /* --- ANIMAÇÕES --- */
+        /* ANIMAÇÕES */
         @keyframes slideInRight {
             from { transform: translateX(100%); opacity: 0; }
             to { transform: translateX(0); opacity: 1; }
         }
-
         @keyframes slideOutLeft {
             from { transform: translateX(0); opacity: 1; }
             to { transform: translateX(-100%); opacity: 0; }
         }
-
         @keyframes fadeIn {
             from { opacity: 0; transform: scale(0.95); }
             to { opacity: 1; transform: scale(1); }
@@ -56,7 +54,6 @@
         }
         .active { display: flex; }
 
-        /* --- UI ELEMENTS --- */
         .top-logo {
             position: absolute; top: -30px; left: 50%; transform: translateX(-50%);
             background: white; width: 70px; height: 70px; border-radius: 22px;
@@ -70,6 +67,10 @@
         }
         .level-tag::before { content: ''; width: 6px; height: 6px; background: black; border-radius: 50%; margin-right: 8px; }
 
+        .nav-back { cursor: pointer; color: var(--text-gray); margin-bottom: 20px; font-size: 12px; font-weight: 700; display: flex; align-items: center; transition: color 0.2s; }
+        .nav-back:active { color: black; }
+        .nav-back i { margin-right: 6px; }
+
         h1 { font-size: 32px; font-weight: 900; line-height: 1.1; color: var(--accent-black); margin-bottom: 12px; }
         .description { font-size: 14px; color: var(--text-gray); line-height: 1.4; margin-bottom: 20px; }
 
@@ -79,7 +80,7 @@
             align-items: center; font-size: 16px; font-weight: 700; cursor: pointer;
             width: 100%; transition: all 0.2s; margin-top: auto;
         }
-        .btn-play:active { transform: scale(0.96); opacity: 0.9; }
+        .btn-play:active { transform: scale(0.96); }
         .btn-play .arrow {
             background: white; color: black; width: 32px; height: 32px;
             border-radius: 50%; display: flex; justify-content: center; align-items: center;
@@ -88,7 +89,6 @@
         .btn-outline { background: transparent; color: var(--accent-black); border: 2px solid #eee; margin-top: 10px; }
         .btn-outline .arrow { background: var(--accent-black); color: white; }
 
-        /* REVEAL CARD ANIMATION */
         .reveal-box { 
             background: #f5f5f5; border-radius: 30px; padding: 40px 20px;
             text-align: center; margin-bottom: 20px; flex-grow: 1;
@@ -103,10 +103,10 @@
         .chip { background: #f0f0f0; padding: 15px; border-radius: 18px; text-align: center; font-weight: 700; cursor: pointer; transition: 0.2s; }
         .chip.selected { background: black; color: white; transform: translateY(-3px); }
 
-        .list-scroll { overflow-y: auto; flex-grow: 1; margin-bottom: 10px; }
+        .list-scroll { overflow-y: auto; flex-grow: 1; margin-bottom: 10px; padding-right: 5px; }
         .list-scroll::-webkit-scrollbar { width: 0; }
 
-        .input-box { background: #f5f5f5; padding: 16px; border-radius: 18px; margin-bottom: 8px; display: flex; align-items: center; }
+        .input-box { background: #f5f5f5; padding: 16px; border-radius: 18px; margin-bottom: 8px; display: flex; align-items: center; border: 2px solid transparent; }
         .input-box input { background: transparent; border: none; font-weight: 700; width: 100%; outline: none; margin-left: 10px; }
 
         .footer-credits { text-align: center; font-size: 10px; color: #ccc; margin-top: 10px; }
@@ -120,7 +120,7 @@
     <div id="page1" class="page active">
         <div class="level-tag">Nível Um</div>
         <h1>Escolha o Modo</h1>
-        <p class="description">Prepare-se para a rodada. O espião terá uma surpresa no final.</p>
+        <p class="description">Selecione o estilo da partida. No modo espião, o impostor recebe o alerta.</p>
         <div style="margin-top:auto">
             <button class="btn-play" onclick="setMode('classic')">Clássico <div class="arrow"><i data-lucide="users" size="16"></i></div></button>
             <button class="btn-play btn-outline" onclick="setMode('spy')">Modo Espião <div class="arrow"><i data-lucide="eye" size="16"></i></div></button>
@@ -128,23 +128,23 @@
     </div>
 
     <div id="page2" class="page">
-        <div class="level-tag">Configuração</div>
-        <h1>Jogadores</h1>
+        <div class="nav-back" onclick="goTo('1')"><i data-lucide="arrow-left" size="14"></i> Menu Inicial</div>
+        <h1>Grupo</h1>
         <p class="description">Quantos amigos vão jogar?</p>
         <div class="chip-grid" id="playerGrid"></div>
         <button class="btn-play" id="btnGoNames" style="display:none" onclick="renderNameInputs()">Próximo <div class="arrow"><i data-lucide="chevron-right" size="16"></i></div></button>
     </div>
 
     <div id="page3" class="page">
-        <div class="level-tag">Identidade</div>
-        <h1>Quem joga?</h1>
+        <div class="nav-back" onclick="goTo('1')"><i data-lucide="arrow-left" size="14"></i> Menu Inicial</div>
+        <h1>Nomes</h1>
         <div class="list-scroll" id="nameList"></div>
         <button class="btn-play" onclick="goTo('Themes')">Temas <div class="arrow"><i data-lucide="layout" size="16"></i></div></button>
     </div>
 
     <div id="pageThemes" class="page">
-        <div class="level-tag">Assunto</div>
-        <h1>O que falar?</h1>
+        <div class="nav-back" onclick="goTo('1')"><i data-lucide="arrow-left" size="14"></i> Menu Inicial</div>
+        <h1>Temas</h1>
         <div class="list-scroll" id="themesContainer"></div>
         <button class="btn-play" onclick="startGame()">Começar <div class="arrow"><i data-lucide="play" size="16"></i></div></button>
     </div>
@@ -160,15 +160,14 @@
     </div>
 
     <div id="pageVote" class="page">
-        <div class="level-tag">Fim da Rodada</div>
+        <div class="level-tag">Votação</div>
         <h1>Quem é?</h1>
-        <p class="description">Debatam e escolham quem vocês acham que é o impostor.</p>
         <div class="list-scroll" id="voteList"></div>
     </div>
 
     <div id="pageResult" class="page">
-        <div class="level-tag">Veredito</div>
-        <h1 id="resTitle">Resultado</h1>
+        <div class="nav-back" onclick="goTo('1')"><i data-lucide="arrow-left" size="14"></i> Menu Inicial</div>
+        <h1 id="resTitle">Status</h1>
         <div class="reveal-box" style="text-align: left; background: #121212; color: white;">
             <p style="margin-bottom:10px; opacity:0.7">🎭 O Impostor era:</p>
             <h2 id="resImpName" style="color:#fff; margin-bottom:20px">---</h2>
@@ -182,16 +181,18 @@
 </div>
 
 <script>
-    // --- DADOS ---
+    // CATALOGO DE TEMAS COMPLETO
     const THEMES = [
-        { name: 'Comida', icon: 'utensils', pairs: [['Pizza', 'Calzone'],['Arroz', 'Feijão'],['Sushi', 'Sashimi'],['Hambúrguer', 'Cachorro Quente']] },
-        { name: 'Animais', icon: 'dog', pairs: [['Leão', 'Tigre'], ['Cachorro', 'Lobo'], ['Gato', 'Pantera'], ['Águia', 'Falcão']] },
-        { name: 'Objetos', icon: 'package', pairs: [['Celular', 'Tablet'], ['Televisão', 'Monitor'], ['Cadeira', 'Banco'], ['Garfo', 'Colher']] }
+        { name: 'Comida', icon: 'utensils', pairs: [['Pizza', 'Esfiha'],['Hambúrguer', 'Sanduíche'],['Macarrão', 'Lasanha'],['Arroz', 'Cuscuz'],['Feijão', 'Lentilha'],['Sorvete', 'Pudim'],['Sushi', 'Temaki'],['Chocolate', 'Brigadeiro'],['Pastel', 'Coxinha'],['Cachorro-quente', 'Misto Quente']] },
+        { name: 'Profissão', icon: 'briefcase', pairs: [['Médico', 'Enfermeiro'],['Professor', 'Tutor'],['Policial', 'Segurança'],['Bombeiro', 'Salva-vidas'],['Advogado', 'Juiz'],['engenheiro', 'arquiteto'],['programador', 'designer'],['dentista', 'ortodontista']] },
+        { name: 'Animais', icon: 'dog', pairs: [['Cachorro', 'Lobo'], ['Gato', 'Pantera'], ['Leão', 'Tigre'], ['Zebra', 'Cavalo'], ['Jacaré', 'Crocodilo'], ['Baleia', 'Golfinho'], ['Cobra', 'Minhoca'], ['Urso', 'Panda'], ['Macaco', 'Chimpanzé'], ['Águia', 'Falcão']] },
+        { name: 'Desenhos', icon: 'tv', pairs: [['Mickey', 'Minnie'], ['Toy Story', 'Carros'], ['Shrek', 'Madagascar'], ['Ben 10', 'Rex'], ['Bob Esponja', 'Patrick'], ['Scooby-Doo', 'Coragem'], ['Naruto', 'Sasuke'], ['Pokémon', 'Digimon']] },
+        { name: 'Objetos', icon: 'package', pairs: [['Cadeira', 'Banco'], ['Sofá', 'Poltrona'], ['Mesa', 'Escrivaninha'], ['Geladeira', 'Freezer'], ['Fogão', 'Microondas'], ['Televisão', 'Monitor'], ['Mouse', 'Teclado'], ['Notebook', 'Tablet'], ['Celular', 'Iphone']] }
     ];
 
     let state = { mode: 'classic', players: 0, list: [], current: 0, theme: null, revealing: false, imp: {} };
 
-    // --- LOGICA DE SORTEIO (FISHER-YATES) ---
+    // FISHER-YATES SHUFFLE
     function shuffle(array) {
         for (let i = array.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
@@ -199,7 +200,6 @@
         }
     }
 
-    // --- NAVEGAÇÃO ---
     function goTo(p) {
         document.querySelectorAll('.page').forEach(page => {
             if(page.classList.contains('active')) {
@@ -208,13 +208,11 @@
             }
         });
         setTimeout(() => {
-            const next = document.getElementById('page' + p);
-            next.classList.add('active');
+            document.getElementById('page' + p).classList.add('active');
         }, 305);
     }
 
-    // --- SETUP ---
-    function setMode(m) { state.mode = m; goTo(2); }
+    function setMode(m) { state.mode = m; goTo('2'); }
 
     const pGrid = document.getElementById('playerGrid');
     for(let i=3; i<=9; i++) {
@@ -234,24 +232,23 @@
             container.innerHTML += `<div class="input-box"><i data-lucide="user" size="16"></i><input type="text" value="Jogador ${i}" id="pIn${i}"></div>`;
         }
         lucide.createIcons();
-        goTo(3);
+        goTo('3');
     }
 
     const tContainer = document.getElementById('themesContainer');
-    THEMES.forEach((t, idx) => {
+    THEMES.forEach((t) => {
         const d = document.createElement('div'); d.className='input-box'; d.style.cursor='pointer';
         d.innerHTML = `<i data-lucide="${t.icon}" size="18"></i><span style="margin-left:15px; font-weight:700">${t.name}</span>`;
         d.onclick = () => {
             state.theme = t;
             document.querySelectorAll('#themesContainer .input-box').forEach(x=>x.style.borderColor='transparent');
-            d.style.border = '2px solid black';
+            d.style.borderColor = 'black';
         };
         tContainer.appendChild(d);
     });
 
-    // --- JOGO ---
     function startGame() {
-        if(!state.theme) return;
+        if(!state.theme) return alert("Selecione um tema!");
         state.list = [];
         const pair = state.theme.pairs[Math.floor(Math.random()*state.theme.pairs.length)];
         const impIdx = Math.floor(Math.random()*state.players);
@@ -260,16 +257,12 @@
 
         for(let i=0; i<state.players; i++) {
             const isImp = (i === impIdx);
-            const pObj = { 
-                name: document.getElementById('pIn'+(i+1)).value, 
-                word: isImp ? iW : cW, 
-                isImp: isImp 
-            };
-            state.list.push(pObj);
-            if(isImp) state.imp = { name: pObj.name, word: iW, civ: cW };
+            const nameValue = document.getElementById('pIn'+(i+1)).value;
+            state.list.push({ name: nameValue, word: isImp ? iW : cW, isImp: isImp });
+            if(isImp) state.imp = { name: nameValue, word: iW, civ: cW };
         }
         
-        shuffle(state.list); // FISHER-YATES AQUI
+        shuffle(state.list);
         state.current = 0;
         prepReveal();
         goTo('Reveal');
@@ -289,19 +282,14 @@
     function handleReveal() {
         const p = state.list[state.current];
         const box = document.getElementById('revBox');
-        
         if(!state.revealing) {
             state.revealing = true;
             document.getElementById('revInstruct').style.display = 'none';
             const wordEl = document.getElementById('revWord');
-            
             if(state.mode === 'spy' && p.isImp) {
                 document.getElementById('revName').style.color = 'var(--red-impostor)';
-                wordEl.innerHTML = `<span style="font-size:10px; color:red">VOCÊ É O IMPOSTOR</span><br>${p.word}`;
-            } else {
-                wordEl.innerText = p.word;
-            }
-            
+                wordEl.innerHTML = `<span style="font-size:10px; color:red; font-weight:900">VOCÊ É O IMPOSTOR</span><br>${p.word}`;
+            } else { wordEl.innerText = p.word; }
             wordEl.style.display = 'block';
             box.classList.add('active-reveal');
             document.getElementById('revBtn').innerHTML = `Esconder <div class="arrow"><i data-lucide="chevron-right" size="16"></i></div>`;
@@ -317,7 +305,7 @@
         const vList = document.getElementById('voteList'); vList.innerHTML = '';
         state.list.forEach(p => {
             const d = document.createElement('div'); d.className='input-box';
-            d.style.justifyContent = 'space-between';
+            d.style.justifyContent = 'space-between'; d.style.cursor = 'pointer';
             d.innerHTML = `<span>${p.name}</span> <i data-lucide="crosshair" size="16" style="color:#ddd"></i>`;
             d.onclick = () => finish(p.isImp);
             vList.appendChild(d);
@@ -327,10 +315,10 @@
     }
 
     function finish(won) {
-        document.getElementById('resTitle').innerText = won ? "Civis Ganharam!" : "Impostor Ganhou!";
         document.getElementById('resImpName').innerText = state.imp.name;
-        document.getElementById('resImpWord').innerText = state.imp.word.toUpperCase();
-        document.getElementById('resCivWord').innerText = state.imp.civ.toUpperCase();
+        document.getElementById('resImpWord').innerText = state.imp.word;
+        document.getElementById('resCivWord').innerText = state.imp.civ;
+        document.getElementById('resTitle').innerText = won ? "Civis Ganharam!" : "Impostor Ganhou!";
         goTo('Result');
     }
 
