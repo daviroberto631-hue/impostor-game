@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Impostor - Davi Roberto Edition v2.1</title>
+    <title>Impostor - Davi Roberto v2.2</title>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
@@ -14,350 +14,327 @@
             --accent-black: #121212;
             --text-gray: #757575;
             --red-impostor: #e81123;
+            --transition-speed: 0.4s;
         }
 
-        /* Reset para evitar o erro da screenshot */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
 
         body { 
             background-color: var(--bg-page); 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            min-height: 100vh; 
-            width: 100vw;
-            overflow: hidden; 
+            display: flex; justify-content: center; align-items: center; 
+            min-height: 100vh; width: 100vw; overflow: hidden; 
         }
 
         #app { 
             background-color: var(--card-bg); 
-            width: 90%; 
-            max-width: 380px; 
-            height: 85vh; 
-            max-height: 700px;
-            border-radius: 40px; 
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            padding: 40px 25px;
-            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
-            /* Garante que o conteúdo não duplique */
-            margin: auto;
+            width: 92%; max-width: 380px; height: 85vh; max-height: 720px;
+            border-radius: 40px; position: relative;
+            display: flex; flex-direction: column;
+            padding: 40px 25px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+            margin: auto; overflow: hidden; /* Corta animações que saem do card */
         }
 
+        /* --- ANIMAÇÕES --- */
+        @keyframes slideInRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes slideOutLeft {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(-100%); opacity: 0; }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .page { 
+            display: none; flex-direction: column; height: 100%; 
+            animation: slideInRight var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .active { display: flex; }
+
+        /* --- UI ELEMENTS --- */
         .top-logo {
-            position: absolute;
-            top: -30px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: white;
-            width: 70px;
-            height: 70px;
-            border-radius: 22px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-            z-index: 10;
+            position: absolute; top: -30px; left: 50%; transform: translateX(-50%);
+            background: white; width: 70px; height: 70px; border-radius: 22px;
+            display: flex; justify-content: center; align-items: center;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1); z-index: 10;
         }
 
         .level-tag {
-            font-size: 10px;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            display: flex;
-            align-items: center;
-            margin-bottom: 30px;
-            margin-top: 15px;
-            color: var(--accent-black);
+            font-size: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: 2px;
+            display: flex; align-items: center; margin-bottom: 20px; margin-top: 15px;
         }
-        .level-tag.dot::before {
-            content: '';
-            width: 6px;
-            height: 6px;
-            background: black;
-            border-radius: 50%;
-            margin-right: 8px;
-        }
+        .level-tag::before { content: ''; width: 6px; height: 6px; background: black; border-radius: 50%; margin-right: 8px; }
 
-        .nav-back { cursor: pointer; color: var(--text-gray); margin-bottom: 25px; font-size: 12px; font-weight: 700; display: flex; align-items: center; }
-        .nav-back i { margin-right: 6px; }
-
-        .page { display: none; flex-direction: column; height: 100%; animation: fadeIn 0.3s ease-in-out; }
-        .active { display: flex; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
-
-        h1 { font-size: 34px; font-weight: 900; line-height: 1.1; color: var(--accent-black); margin-bottom: 15px; }
-        .description { font-size: 15px; color: var(--text-gray); line-height: 1.4; margin-bottom: 25px; }
+        h1 { font-size: 32px; font-weight: 900; line-height: 1.1; color: var(--accent-black); margin-bottom: 12px; }
+        .description { font-size: 14px; color: var(--text-gray); line-height: 1.4; margin-bottom: 20px; }
 
         .btn-play {
-            background: var(--accent-black);
-            color: white;
-            padding: 16px 20px;
-            border-radius: 50px;
-            border: none;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 16px;
-            font-weight: 700;
-            cursor: pointer;
-            width: 100%;
-            transition: transform 0.1s;
-            margin-top: auto;
+            background: var(--accent-black); color: white; padding: 18px 20px;
+            border-radius: 50px; border: none; display: flex; justify-content: space-between;
+            align-items: center; font-size: 16px; font-weight: 700; cursor: pointer;
+            width: 100%; transition: all 0.2s; margin-top: auto;
         }
-        .btn-play:active { transform: scale(0.98); }
+        .btn-play:active { transform: scale(0.96); opacity: 0.9; }
         .btn-play .arrow {
-            background: white;
-            color: black;
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            background: white; color: black; width: 32px; height: 32px;
+            border-radius: 50%; display: flex; justify-content: center; align-items: center;
         }
 
         .btn-outline { background: transparent; color: var(--accent-black); border: 2px solid #eee; margin-top: 10px; }
         .btn-outline .arrow { background: var(--accent-black); color: white; }
 
-        .selection-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-        .chip { background: #f3f3f3; padding: 14px; border-radius: 15px; text-align: center; font-weight: 700; cursor: pointer; font-size: 14px; }
-        .chip.selected { background: black; color: white; }
-
-        .list-container { overflow-y: auto; flex-grow: 1; margin-bottom: 15px; padding-right: 2px; }
-        .list-container::-webkit-scrollbar { width: 0; }
-
-        .input-item { background: #f5f5f5; padding: 14px; border-radius: 15px; margin-bottom: 8px; display: flex; align-items: center; }
-        .input-item input { background: transparent; border: none; font-weight: 700; width: 100%; outline: none; margin-left: 8px; font-size: 15px; }
-
-        .theme-card { padding: 18px; background: #f5f5f5; border-radius: 18px; margin-bottom: 8px; display: flex; align-items: center; cursor: pointer; font-weight: 700; border: 2px solid transparent; font-size: 15px; }
-        .theme-card.selected { border-color: black; }
-
-        .reveal-box { background: #f5f5f5; border-radius: 25px; padding: 30px 15px; text-align: center; margin-bottom: auto; min-height: 150px; display: flex; flex-direction: column; justify-content: center; }
-        .word-secret { font-size: 26px; font-weight: 900; color: black; display: none; text-transform: uppercase; margin-top: 10px; }
-
-        .vote-item { background: white; border: 1px solid #eee; padding: 16px; border-radius: 18px; margin-bottom: 8px; display: flex; justify-content: space-between; font-weight: 700; font-size: 14px; }
-
-        .footer-credits {
-            text-align: center;
-            font-size: 10px;
-            color: #ccc;
-            text-transform: lowercase;
-            letter-spacing: 1px;
-            padding-top: 15px;
+        /* REVEAL CARD ANIMATION */
+        .reveal-box { 
+            background: #f5f5f5; border-radius: 30px; padding: 40px 20px;
+            text-align: center; margin-bottom: 20px; flex-grow: 1;
+            display: flex; flex-direction: column; justify-content: center;
+            transition: all 0.3s ease; border: 2px dashed #e0e0e0;
         }
+        .reveal-box.active-reveal { border-style: solid; border-color: black; background: white; }
+
+        .word-secret { font-size: 28px; font-weight: 900; color: black; animation: fadeIn 0.4s ease; text-transform: uppercase; }
+
+        .chip-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+        .chip { background: #f0f0f0; padding: 15px; border-radius: 18px; text-align: center; font-weight: 700; cursor: pointer; transition: 0.2s; }
+        .chip.selected { background: black; color: white; transform: translateY(-3px); }
+
+        .list-scroll { overflow-y: auto; flex-grow: 1; margin-bottom: 10px; }
+        .list-scroll::-webkit-scrollbar { width: 0; }
+
+        .input-box { background: #f5f5f5; padding: 16px; border-radius: 18px; margin-bottom: 8px; display: flex; align-items: center; }
+        .input-box input { background: transparent; border: none; font-weight: 700; width: 100%; outline: none; margin-left: 10px; }
+
+        .footer-credits { text-align: center; font-size: 10px; color: #ccc; margin-top: 10px; }
     </style>
 </head>
 <body>
 
 <div id="app">
-    <div class="top-logo">
-        <i data-lucide="zap" fill="black" size="35"></i>
-    </div>
+    <div class="top-logo"><i data-lucide="zap" fill="black" size="35"></i></div>
 
-    <!-- P1: INÍCIO -->
     <div id="page1" class="page active">
-        <div class="level-tag dot">Nível Um</div>
+        <div class="level-tag">Nível Um</div>
         <h1>Escolha o Modo</h1>
-        <p class="description">Como você quer jogar hoje? O impostor deve saber quem ele é?</p>
-        
-        <div style="margin-top: auto; display: flex; flex-direction: column; margin-bottom: 20px;">
-            <button class="btn-play" onclick="setModeAndGo('classic')">
-                Clássico <div class="arrow"><i data-lucide="user-minus" size="16"></i></div>
-            </button>
-            <button class="btn-play btn-outline" onclick="setModeAndGo('spy')">
-                Espião <div class="arrow"><i data-lucide="eye" size="16"></i></div>
-            </button>
+        <p class="description">Prepare-se para a rodada. O espião terá uma surpresa no final.</p>
+        <div style="margin-top:auto">
+            <button class="btn-play" onclick="setMode('classic')">Clássico <div class="arrow"><i data-lucide="users" size="16"></i></div></button>
+            <button class="btn-play btn-outline" onclick="setMode('spy')">Modo Espião <div class="arrow"><i data-lucide="eye" size="16"></i></div></button>
         </div>
     </div>
 
-    <!-- P2: JOGADORES -->
     <div id="page2" class="page">
-        <div class="nav-back" onclick="goToPage(1)"><i data-lucide="arrow-left" size="14"></i> Menu Inicial</div>
-        <h1>Grupo</h1>
-        <p class="description">Quantas pessoas na roda?</p>
-        <div class="selection-grid" id="playerGrid"></div>
-        <button class="btn-play" id="btnNext2" style="display:none; margin-top: auto;" onclick="setupNames()">
-            Próximo <div class="arrow"><i data-lucide="arrow-right" size="16"></i></div>
-        </button>
+        <div class="level-tag">Configuração</div>
+        <h1>Jogadores</h1>
+        <p class="description">Quantos amigos vão jogar?</p>
+        <div class="chip-grid" id="playerGrid"></div>
+        <button class="btn-play" id="btnGoNames" style="display:none" onclick="renderNameInputs()">Próximo <div class="arrow"><i data-lucide="chevron-right" size="16"></i></div></button>
     </div>
 
-    <!-- P3: NOMES -->
     <div id="page3" class="page">
-        <div class="nav-back" onclick="goToPage(1)"><i data-lucide="arrow-left" size="14"></i> Menu Inicial</div>
-        <h1>Nomes</h1>
-        <div class="list-container" id="nameList"></div>
-        <button class="btn-play" onclick="goToPage('Themes')">
-            Temas <div class="arrow"><i data-lucide="arrow-right" size="16"></i></div>
-        </button>
+        <div class="level-tag">Identidade</div>
+        <h1>Quem joga?</h1>
+        <div class="list-scroll" id="nameList"></div>
+        <button class="btn-play" onclick="goTo('Themes')">Temas <div class="arrow"><i data-lucide="layout" size="16"></i></div></button>
     </div>
 
-    <!-- P4: TEMAS -->
     <div id="pageThemes" class="page">
-        <div class="nav-back" onclick="goToPage(1)"><i data-lucide="arrow-left" size="14"></i> Menu Inicial</div>
-        <h1>Temas</h1>
-        <div class="list-container" id="themesGrid"></div>
-        <button class="btn-play" onclick="prepareGame()">
-            Iniciar <div class="arrow"><i data-lucide="play" size="16"></i></div>
-        </button>
+        <div class="level-tag">Assunto</div>
+        <h1>O que falar?</h1>
+        <div class="list-scroll" id="themesContainer"></div>
+        <button class="btn-play" onclick="startGame()">Começar <div class="arrow"><i data-lucide="play" size="16"></i></div></button>
     </div>
 
-    <!-- P5: REVELAÇÃO -->
     <div id="pageReveal" class="page">
-        <div class="level-tag dot" id="revealTag">Vez de</div>
-        <h1 id="currentPlayerName">Jogador</h1>
-        <div class="reveal-box">
-            <p id="instructionText" style="font-weight:700; color:var(--text-gray)">Toque para revelar.</p>
-            <div id="wordDisplay" class="word-secret">---</div>
+        <div class="level-tag">A vez de</div>
+        <h1 id="revName">Jogador</h1>
+        <div class="reveal-box" id="revBox">
+            <p id="revInstruct">Mantenha segredo!<br>Toque no botão para ver.</p>
+            <div id="revWord" class="word-secret" style="display:none">---</div>
         </div>
-        <button class="btn-play" id="revealBtn" onclick="toggleReveal()">
-            Ver Carta <div class="arrow"><i data-lucide="eye" size="16"></i></div>
-        </button>
+        <button class="btn-play" id="revBtn" onclick="handleReveal()">Ver Carta <div class="arrow"><i data-lucide="eye" size="16"></i></div></button>
     </div>
 
-    <!-- P6: VOTAÇÃO -->
     <div id="pageVote" class="page">
-        <div class="level-tag dot">Votação</div>
+        <div class="level-tag">Fim da Rodada</div>
         <h1>Quem é?</h1>
-        <div class="list-container" id="voteList"></div>
+        <p class="description">Debatam e escolham quem vocês acham que é o impostor.</p>
+        <div class="list-scroll" id="voteList"></div>
     </div>
 
-    <!-- P7: RESULTADO -->
     <div id="pageResult" class="page">
-        <div class="nav-back" onclick="goToPage(1)"><i data-lucide="arrow-left" size="14"></i> Menu Inicial</div>
-        <h1 id="resultVerdict">Fim!</h1>
-        <div class="reveal-box" style="text-align: left; padding: 20px;">
-            <p style="margin-bottom:8px">🎭 Impostor: <b id="resImpName"></b></p>
-            <p style="margin-bottom:8px">🔴 Palavra: <b id="resImpWord"></b></p>
-            <p>🔵 Civis: <b id="resCivWord"></b></p>
+        <div class="level-tag">Veredito</div>
+        <h1 id="resTitle">Resultado</h1>
+        <div class="reveal-box" style="text-align: left; background: #121212; color: white;">
+            <p style="margin-bottom:10px; opacity:0.7">🎭 O Impostor era:</p>
+            <h2 id="resImpName" style="color:#fff; margin-bottom:20px">---</h2>
+            <p style="font-size:12px; margin-bottom:5px">Palavra do Impostor: <b id="resImpWord" style="color:var(--red-impostor)"></b></p>
+            <p style="font-size:12px">Palavra dos Civis: <b id="resCivWord" style="color:#4ade80"></b></p>
         </div>
-        <button class="btn-play" onclick="goToPage('Themes')">
-            Jogar de novo <div class="arrow"><i data-lucide="refresh-cw" size="16"></i></div>
-        </button>
+        <button class="btn-play" onclick="goTo('Themes')">Nova Rodada <div class="arrow"><i data-lucide="refresh-cw" size="16"></i></div></button>
     </div>
 
-    <div class="footer-credits">v 2.1 · criado por davi roberto</div>
+    <div class="footer-credits">v 2.2 · davi roberto</div>
 </div>
 
 <script>
+    // --- DADOS ---
     const THEMES = [
-        { id: 'comida', name: 'Comida', icon: 'utensils', pairs: [['pizza', 'esfiha'],['hambúrguer', 'sanduíche'],['macarrão', 'lasanha'],['arroz', 'cuscuz'],['feijão', 'lentilha'],['sorvete', 'pudim'],['sushi', 'temaki'],['chocolate', 'brigadeiro'],['pastel', 'coxinha'],['cachorro-quente', 'misto quente']] },
-        { id: 'profissao', name: 'Profissão', icon: 'briefcase', pairs: [['médico', 'enfermeiro'],['professor', 'tutor'],['policial', 'segurança'],['bombeiro', 'salva-vidas'],['advogado', 'juiz'],['engenheiro', 'arquiteto'],['programador', 'designer'],['dentista', 'ortodontista']] },
-        { id: 'animais', name: 'Animais', icon: 'dog', pairs: [['Cachorro', 'Lobo'], ['Gato', 'Pantera'], ['Leão', 'Tigre'], ['Zebra', 'Cavalo'], ['Jacaré', 'Crocodilo'], ['Baleia', 'Golfinho'], ['Cobra', 'Minhoca'], ['Urso', 'Panda'], ['Macaco', 'Chimpanzé'], ['Águia', 'Falcão']] },
-        { id: 'desenhos', name: 'Desenhos', icon: 'tv', pairs: [['Mickey', 'Minnie'], ['Toy Story', 'Carros'], ['Shrek', 'Madagascar'], ['Ben 10', 'Rex'], ['Bob Esponja', 'Patrick'], ['Scooby-Doo', 'Coragem'], ['Naruto', 'Sasuke'], ['Pokémon', 'Digimon']] },
-        { id: 'objetos', name: 'Objetos', icon: 'package', pairs: [['Cadeira', 'Banco'], ['Sofá', 'Poltrona'], ['Mesa', 'Escrivaninha'], ['Geladeira', 'Freezer'], ['Fogão', 'Microondas'], ['Televisão', 'Monitor'], ['Mouse', 'Teclado'], ['Notebook', 'Tablet'], ['Celular', 'Iphone']] }
+        { name: 'Comida', icon: 'utensils', pairs: [['Pizza', 'Calzone'],['Arroz', 'Feijão'],['Sushi', 'Sashimi'],['Hambúrguer', 'Cachorro Quente']] },
+        { name: 'Animais', icon: 'dog', pairs: [['Leão', 'Tigre'], ['Cachorro', 'Lobo'], ['Gato', 'Pantera'], ['Águia', 'Falcão']] },
+        { name: 'Objetos', icon: 'package', pairs: [['Celular', 'Tablet'], ['Televisão', 'Monitor'], ['Cadeira', 'Banco'], ['Garfo', 'Colher']] }
     ];
 
-    let gameMode = 'classic', playerCount = 0, playerList = [], currentIdx = 0, isShowing = false, selectedTheme = null, impostorInfo = {};
+    let state = { mode: 'classic', players: 0, list: [], current: 0, theme: null, revealing: false, imp: {} };
 
-    function setModeAndGo(m) { gameMode = m; goToPage(2); }
+    // --- LOGICA DE SORTEIO (FISHER-YATES) ---
+    function shuffle(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+    }
+
+    // --- NAVEGAÇÃO ---
+    function goTo(p) {
+        document.querySelectorAll('.page').forEach(page => {
+            if(page.classList.contains('active')) {
+                page.style.animation = 'slideOutLeft 0.3s forwards';
+                setTimeout(() => { page.classList.remove('active'); page.style.animation = ''; }, 300);
+            }
+        });
+        setTimeout(() => {
+            const next = document.getElementById('page' + p);
+            next.classList.add('active');
+        }, 305);
+    }
+
+    // --- SETUP ---
+    function setMode(m) { state.mode = m; goTo(2); }
 
     const pGrid = document.getElementById('playerGrid');
     for(let i=3; i<=9; i++) {
-        const b = document.createElement('div'); b.className='chip'; b.innerText=i;
-        b.onclick = () => { 
-            playerCount=i; 
-            document.querySelectorAll('.chip').forEach(x=>x.classList.remove('selected')); 
-            b.classList.add('selected'); 
-            document.getElementById('btnNext2').style.display='flex'; 
+        const c = document.createElement('div'); c.className='chip'; c.innerText=i;
+        c.onclick = () => {
+            state.players = i;
+            document.querySelectorAll('.chip').forEach(x=>x.classList.remove('selected'));
+            c.classList.add('selected');
+            document.getElementById('btnGoNames').style.display='flex';
         };
-        pGrid.appendChild(b);
+        pGrid.appendChild(c);
     }
 
-    const tGrid = document.getElementById('themesGrid');
-    THEMES.forEach(t => {
-        const card = document.createElement('div'); card.className='theme-card';
-        card.innerHTML = `<i data-lucide="${t.icon}" size="18" style="margin-right:12px"></i> ${t.name}`;
-        card.onclick = () => { 
-            selectedTheme=t; 
-            document.querySelectorAll('.theme-card').forEach(c=>c.classList.remove('selected')); 
-            card.classList.add('selected'); 
+    function renderNameInputs() {
+        const container = document.getElementById('nameList'); container.innerHTML = '';
+        for(let i=1; i<=state.players; i++) {
+            container.innerHTML += `<div class="input-box"><i data-lucide="user" size="16"></i><input type="text" value="Jogador ${i}" id="pIn${i}"></div>`;
+        }
+        lucide.createIcons();
+        goTo(3);
+    }
+
+    const tContainer = document.getElementById('themesContainer');
+    THEMES.forEach((t, idx) => {
+        const d = document.createElement('div'); d.className='input-box'; d.style.cursor='pointer';
+        d.innerHTML = `<i data-lucide="${t.icon}" size="18"></i><span style="margin-left:15px; font-weight:700">${t.name}</span>`;
+        d.onclick = () => {
+            state.theme = t;
+            document.querySelectorAll('#themesContainer .input-box').forEach(x=>x.style.borderColor='transparent');
+            d.style.border = '2px solid black';
         };
-        tGrid.appendChild(card);
+        tContainer.appendChild(d);
     });
-    lucide.createIcons();
 
-    function goToPage(n) {
-        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-        if (typeof n === 'string') document.getElementById('page' + n).classList.add('active');
-        else document.getElementById('page' + n).classList.add('active');
-    }
-
-    function setupNames() {
-        const list = document.getElementById('nameList'); list.innerHTML = '';
-        for(let i=1; i<=playerCount; i++) list.innerHTML += `<div class="input-item"><i data-lucide="user" size="16"></i><input type="text" value="Jogador ${i}" id="pn${i}"></div>`;
-        lucide.createIcons();
-        goToPage(3);
-    }
-
-    function prepareGame() {
-        if(!selectedTheme) return;
-        playerList = [];
-        const pair = selectedTheme.pairs[Math.floor(Math.random()*selectedTheme.pairs.length)];
-        const impIdx = Math.floor(Math.random()*playerCount);
+    // --- JOGO ---
+    function startGame() {
+        if(!state.theme) return;
+        state.list = [];
+        const pair = state.theme.pairs[Math.floor(Math.random()*state.theme.pairs.length)];
+        const impIdx = Math.floor(Math.random()*state.players);
         const flip = Math.random() > 0.5;
-        const civWord = pair[flip?0:1], impWord = pair[flip?1:0];
+        const cW = pair[flip?0:1], iW = pair[flip?1:0];
 
-        for(let i=0; i<playerCount; i++) {
+        for(let i=0; i<state.players; i++) {
             const isImp = (i === impIdx);
-            const pObj = { name: document.getElementById('pn'+(i+1)).value, word: isImp ? impWord : civWord, isImpostor: isImp };
-            playerList.push(pObj);
-            if(isImp) impostorInfo = { name: pObj.name, word: impWord, civWord: civWord };
+            const pObj = { 
+                name: document.getElementById('pIn'+(i+1)).value, 
+                word: isImp ? iW : cW, 
+                isImp: isImp 
+            };
+            state.list.push(pObj);
+            if(isImp) state.imp = { name: pObj.name, word: iW, civ: cW };
         }
-        playerList.sort(() => Math.random() - 0.5);
-        currentIdx = 0; updateReveal(); goToPage('Reveal');
+        
+        shuffle(state.list); // FISHER-YATES AQUI
+        state.current = 0;
+        prepReveal();
+        goTo('Reveal');
     }
 
-    function updateReveal() {
-        document.getElementById('currentPlayerName').innerText = playerList[currentIdx].name;
-        document.getElementById('currentPlayerName').style.color = 'black';
-        document.getElementById('wordDisplay').style.display = 'none';
-        document.getElementById('instructionText').style.display = 'block';
-        document.getElementById('revealBtn').innerHTML = `Ver Carta <div class="arrow"><i data-lucide="eye" size="16"></i></div>`;
-        isShowing = false;
+    function prepReveal() {
+        state.revealing = false;
+        document.getElementById('revName').innerText = state.list[state.current].name;
+        document.getElementById('revName').style.color = 'black';
+        document.getElementById('revInstruct').style.display = 'block';
+        document.getElementById('revWord').style.display = 'none';
+        document.getElementById('revBox').classList.remove('active-reveal');
+        document.getElementById('revBtn').innerHTML = `Ver Carta <div class="arrow"><i data-lucide="eye" size="16"></i></div>`;
         lucide.createIcons();
     }
 
-    function toggleReveal() {
-        const p = playerList[currentIdx];
-        if(!isShowing) {
-            const disp = document.getElementById('wordDisplay');
-            if(gameMode === 'spy' && p.isImpostor) {
-                document.getElementById('currentPlayerName').style.color = 'var(--red-impostor)';
-                disp.innerHTML = `<div style="color:var(--red-impostor); font-size:12px; margin-bottom:5px">VOCÊ É O IMPOSTOR</div>${p.word}`;
-            } else { disp.innerText = p.word; }
-            disp.style.display = 'block';
-            document.getElementById('instructionText').style.display = 'none';
-            document.getElementById('revealBtn').innerHTML = `Esconder <div class="arrow"><i data-lucide="arrow-right" size="16"></i></div>`;
-            isShowing = true;
-            lucide.createIcons();
+    function handleReveal() {
+        const p = state.list[state.current];
+        const box = document.getElementById('revBox');
+        
+        if(!state.revealing) {
+            state.revealing = true;
+            document.getElementById('revInstruct').style.display = 'none';
+            const wordEl = document.getElementById('revWord');
+            
+            if(state.mode === 'spy' && p.isImp) {
+                document.getElementById('revName').style.color = 'var(--red-impostor)';
+                wordEl.innerHTML = `<span style="font-size:10px; color:red">VOCÊ É O IMPOSTOR</span><br>${p.word}`;
+            } else {
+                wordEl.innerText = p.word;
+            }
+            
+            wordEl.style.display = 'block';
+            box.classList.add('active-reveal');
+            document.getElementById('revBtn').innerHTML = `Esconder <div class="arrow"><i data-lucide="chevron-right" size="16"></i></div>`;
         } else {
-            currentIdx++;
-            if(currentIdx < playerList.length) updateReveal();
-            else startVoting();
+            state.current++;
+            if(state.current < state.list.length) prepReveal();
+            else showVote();
         }
+        lucide.createIcons();
     }
 
-    function startVoting() {
-        const list = document.getElementById('voteList'); list.innerHTML = '';
-        playerList.forEach(p => {
-            const item = document.createElement('div'); item.className = 'vote-item';
-            item.innerHTML = `<span>${p.name}</span> <span style="color:#aaa; font-size:10px">VOTAR</span>`;
-            item.onclick = () => showResult(p.isImpostor);
-            list.appendChild(item);
+    function showVote() {
+        const vList = document.getElementById('voteList'); vList.innerHTML = '';
+        state.list.forEach(p => {
+            const d = document.createElement('div'); d.className='input-box';
+            d.style.justifyContent = 'space-between';
+            d.innerHTML = `<span>${p.name}</span> <i data-lucide="crosshair" size="16" style="color:#ddd"></i>`;
+            d.onclick = () => finish(p.isImp);
+            vList.appendChild(d);
         });
-        goToPage('Vote');
+        lucide.createIcons();
+        goTo('Vote');
     }
 
-    function showResult(win) {
-        document.getElementById('resultVerdict').innerText = win ? "Civis Venceram!" : "Impostor Venceu!";
-        document.getElementById('resImpName').innerText = impostorInfo.name;
-        document.getElementById('resImpWord').innerText = impostorInfo.word.toUpperCase();
-        document.getElementById('resCivWord').innerText = impostorInfo.civWord.toUpperCase();
-        goToPage('Result');
+    function finish(won) {
+        document.getElementById('resTitle').innerText = won ? "Civis Ganharam!" : "Impostor Ganhou!";
+        document.getElementById('resImpName').innerText = state.imp.name;
+        document.getElementById('resImpWord').innerText = state.imp.word.toUpperCase();
+        document.getElementById('resCivWord').innerText = state.imp.civ.toUpperCase();
+        goTo('Result');
     }
+
+    lucide.createIcons();
 </script>
 </body>
 </html>
