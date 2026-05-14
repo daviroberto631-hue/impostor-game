@@ -1,204 +1,232 @@
-        <!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Impostor - Minimalista Moderno</title>
+    <title>Impostor - Davi Roberto Edition</title>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
 
         :root {
-            --bg: #f8fafc;
-            --surface: #ffffff;
-            --primary: #6366f1;
-            --text-main: #1e293b;
-            --text-sub: #64748b;
-            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+            --bg-page: #1a1a1a;
+            --card-bg: #fdfdfb;
+            --accent-black: #121212;
+            --text-gray: #757575;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; -webkit-tap-highlight-color: transparent; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
 
-        body { background-color: var(--bg); display: flex; justify-content: center; align-items: center; height: 100vh; color: var(--text-main); }
+        body { 
+            background-color: var(--bg-page); 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            height: 100vh; 
+            overflow: hidden; 
+        }
 
         #app { 
-            background-color: var(--surface); 
-            width: 100%; 
-            max-width: 420px; 
-            height: 100%; 
-            display: flex; 
-            flex-direction: column; 
-            padding: 40px 24px; 
+            background-color: var(--card-bg); 
+            width: 92%; 
+            max-width: 400px; 
+            height: 85vh; 
+            border-radius: 40px; 
             position: relative;
-            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            padding: 40px 30px;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
         }
 
-        .page { display: none; flex-direction: column; height: 100%; animation: slideUp 0.4s ease-out; }
-        .active { display: flex; }
-
-        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-
-        h1 { font-size: 28px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 8px; text-align: center; }
-        .subtitle { font-size: 15px; color: var(--text-sub); text-align: center; margin-bottom: 32px; }
-
-        /* Botões Modernos */
-        .btn-action { 
-            background: var(--primary); 
-            color: white; 
-            padding: 18px; 
-            border-radius: 20px; 
-            border: none; 
-            font-weight: 700; 
-            font-size: 16px; 
-            cursor: pointer; 
-            transition: all 0.2s;
+        /* Badge Superior */
+        .top-logo {
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            width: 80px;
+            height: 80px;
+            border-radius: 25px;
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 12px;
-            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         }
 
-        .btn-action:active { transform: scale(0.97); }
-
-        /* Grade de Jogadores e Temas */
-        .selection-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 24px; }
-        .chip { 
-            background: #f1f5f9; 
-            padding: 16px; 
-            border-radius: 16px; 
-            text-align: center; 
-            font-weight: 600; 
-            cursor: pointer; 
-            border: 2px solid transparent;
-            transition: 0.2s;
+        .level-tag {
+            font-size: 11px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            margin-bottom: 60px;
+            margin-top: 20px;
         }
-        .chip.selected { background: #eef2ff; border-color: var(--primary); color: var(--primary); }
-
-        .list-container { overflow-y: auto; flex-grow: 1; margin-bottom: 20px; padding-right: 4px; }
-        
-        .input-card { 
-            background: #f1f5f9; 
-            padding: 14px 20px; 
-            border-radius: 18px; 
-            margin-bottom: 10px; 
-            display: flex; 
-            align-items: center; 
+        .level-tag::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: black;
+            border-radius: 50%;
+            margin-right: 10px;
         }
-        .input-card input { background: transparent; border: none; font-weight: 600; width: 100%; outline: none; font-size: 16px; margin-left: 10px; }
 
-        .theme-item { 
-            display: flex; 
-            align-items: center; 
-            padding: 16px; 
-            background: #f8fafc; 
-            border-radius: 20px; 
-            margin-bottom: 12px; 
-            border: 2px solid transparent;
+        .page { display: none; flex-direction: column; height: 100%; animation: fadeIn 0.4s ease; }
+        .active { display: flex; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        h1 { font-size: 42px; font-weight: 900; line-height: 1.1; color: var(--accent-black); margin-bottom: 20px; }
+        .description { font-size: 16px; color: var(--text-gray); line-height: 1.5; margin-bottom: 40px; }
+
+        /* Botão Estilo Imagem 1000072478.jpg */
+        .btn-play {
+            background: var(--accent-black);
+            color: white;
+            padding: 20px 25px;
+            border-radius: 50px;
+            border: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 18px;
+            font-weight: 700;
             cursor: pointer;
+            width: 100%;
+            margin-top: auto;
+            text-decoration: none;
         }
-        .theme-item.selected { border-color: var(--primary); background: #f5f3ff; }
-        .theme-icon { width: 44px; height: 44px; background: white; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-right: 16px; box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
-
-        /* Reveal Card */
-        .card-reveal { 
-            background: #f1f5f9; 
-            border-radius: 32px; 
-            padding: 60px 24px; 
-            text-align: center; 
-            margin: auto 0;
-            border: 1px solid rgba(0,0,0,0.05);
-        }
-        .word-badge { font-size: 32px; font-weight: 800; color: var(--primary); display: none; margin-top: 16px; letter-spacing: -1px; }
-
-        .vote-card { 
-            padding: 18px; 
-            background: #fff; 
-            border: 1px solid #e2e8f0; 
-            border-radius: 18px; 
-            margin-bottom: 10px; 
-            font-weight: 600; 
-            display: flex; 
-            justify-content: space-between; 
+        .btn-play .arrow {
+            background: white;
+            color: black;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
             align-items: center;
         }
+
+        /* Rodapé Estilo Imagem */
+        .footer-credits {
+            text-align: center;
+            font-size: 11px;
+            color: #b5b5b5;
+            text-transform: lowercase;
+            letter-spacing: 1px;
+            margin-top: 25px;
+        }
+
+        /* Grid e Listas */
+        .selection-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+        .chip { background: #f0f0f0; padding: 15px; border-radius: 15px; text-align: center; font-weight: 700; cursor: pointer; }
+        .chip.selected { background: black; color: white; }
+
+        .list-container { overflow-y: auto; flex-grow: 1; margin-bottom: 20px; }
+        .input-item { background: #f5f5f5; padding: 15px; border-radius: 15px; margin-bottom: 8px; display: flex; align-items: center; }
+        .input-item input { background: transparent; border: none; font-weight: 700; width: 100%; outline: none; margin-left: 10px; font-size: 16px; }
+
+        .theme-card { padding: 20px; background: #f5f5f5; border-radius: 20px; margin-bottom: 10px; display: flex; align-items: center; cursor: pointer; font-weight: 700; border: 2px solid transparent; }
+        .theme-card.selected { border-color: black; background: #eee; }
+
+        .reveal-box { background: #f5f5f5; border-radius: 30px; padding: 50px 20px; text-align: center; margin-top: 20px; }
+        .word-secret { font-size: 30px; font-weight: 900; color: black; display: none; margin-top: 15px; text-transform: uppercase; }
+
+        .vote-item { background: white; border: 1px solid #ddd; padding: 18px; border-radius: 20px; margin-bottom: 10px; display: flex; justify-content: space-between; font-weight: 700; }
     </style>
 </head>
 <body>
 
 <div id="app">
-    <!-- P1: HOME -->
-    <div id="page1" class="page active">
-        <div style="margin: auto 0; text-align: center;">
-            <div style="color: var(--primary); margin-bottom: 16px;"><i data-lucide="shield-check" size="48"></i></div>
-            <h1>Impostor</h1>
-            <p class="subtitle">O jogo de dedução minimalista</p>
-        </div>
-        <button class="btn-action" onclick="goToPage(2)">Começar Partida</button>
+    <div class="top-logo">
+        <i data-lucide="Zap" fill="black" size="40"></i>
     </div>
 
-    <!-- P2: QUANTIDADE -->
+    <!-- P1: START -->
+    <div id="page1" class="page active">
+        <div class="level-tag">Nível Um</div>
+        <h1>Pronto pra começar?</h1>
+        <p class="description">Toque no botão abaixo para iniciar sua jornada e encontrar o impostor.</p>
+        <button class="btn-play" onclick="goToPage(2)">
+            Jogar <div class="arrow"><i data-lucide="arrow-right" size="18"></i></div>
+        </button>
+    </div>
+
+    <!-- P2: JOGADORES -->
     <div id="page2" class="page">
-        <h1>Jogadores</h1>
-        <p class="subtitle">Selecione o tamanho do grupo</p>
+        <div class="level-tag">Setup</div>
+        <h1>Grupo</h1>
         <div class="selection-grid" id="playerGrid"></div>
-        <button class="btn-action" id="btnNext2" style="display:none; margin-top: auto;" onclick="setupNames()">Próximo</button>
+        <button class="btn-play" id="btnNext2" style="display:none" onclick="setupNames()">
+            Próximo <div class="arrow"><i data-lucide="arrow-right" size="18"></i></div>
+        </button>
     </div>
 
     <!-- P3: NOMES -->
     <div id="page3" class="page">
+        <div class="level-tag">Jogadores</div>
         <h1>Nomes</h1>
-        <p class="subtitle">Quem está na roda?</p>
         <div class="list-container" id="nameList"></div>
-        <button class="btn-action" onclick="goToPage('Themes')">Escolher Tema</button>
+        <button class="btn-play" onclick="goToPage('Themes')">
+            Temas <div class="arrow"><i data-lucide="arrow-right" size="18"></i></div>
+        </button>
     </div>
 
     <!-- P4: TEMAS -->
     <div id="pageThemes" class="page">
-        <h1>Temas</h1>
-        <p class="subtitle">O que vamos descobrir hoje?</p>
+        <div class="level-tag">Categorias</div>
+        <h1>Escolha</h1>
         <div class="list-container" id="themesGrid"></div>
-        <button class="btn-action" onclick="prepareGame()">Iniciar Rodada</button>
+        <button class="btn-play" onclick="prepareGame()">
+            Iniciar <div class="arrow"><i data-lucide="play" size="18"></i></div>
+        </button>
     </div>
 
     <!-- P5: REVELAÇÃO -->
     <div id="pageReveal" class="page">
+        <div class="level-tag" id="revealTag">Vez de</div>
         <h1 id="currentPlayerName">Nome</h1>
-        <p class="subtitle">Sua vez de ver a palavra</p>
-        <div class="card-reveal">
-            <p id="instructionText" style="margin:0; font-weight: 600;">Toque abaixo para revelar</p>
-            <div id="wordDisplay" class="word-badge">PALAVRA</div>
+        <div class="reveal-box">
+            <p id="instructionText">Clique no botão para ver.</p>
+            <div id="wordDisplay" class="word-secret">---</div>
         </div>
-        <button class="btn-action" id="revealBtn" onclick="toggleReveal()" style="margin-top: 32px;">Ver Palavra</button>
+        <button class="btn-play" id="revealBtn" onclick="toggleReveal()">
+            Ver <div class="arrow"><i data-lucide="eye" size="18"></i></div>
+        </button>
     </div>
 
     <!-- P6: VOTAÇÃO -->
     <div id="pageVote" class="page">
-        <h1>Votação</h1>
-        <p class="subtitle">Quem parece suspeito?</p>
+        <div class="level-tag">Votação</div>
+        <h1>Quem?</h1>
         <div class="list-container" id="voteList"></div>
     </div>
 
     <!-- P7: RESULTADO -->
     <div id="pageResult" class="page">
-        <h1 id="resultVerdict">Acertaram!</h1>
-        <p class="subtitle">Confira os detalhes da rodada</p>
-        <div class="card-reveal" style="padding: 30px; text-align: left;">
-            <div style="margin-bottom: 12px; font-size: 14px; color: var(--text-sub);">Impostor: <b id="resImpName" style="color: var(--text-main)"></b></div>
-            <div style="margin-bottom: 12px; font-size: 14px; color: var(--text-sub);">Palavra dele: <b id="resImpWord" style="color: #ef4444"></b></div>
-            <div style="font-size: 14px; color: var(--text-sub);">Palavra Civis: <b id="resCivWord" style="color: var(--primary)"></b></div>
+        <div class="level-tag">Fim da Rodada</div>
+        <h1 id="resultVerdict">Status</h1>
+        <div class="reveal-box" style="text-align: left; padding: 25px;">
+            <p style="margin-bottom:10px">🎭 Impostor: <b id="resImpName"></b></p>
+            <p style="margin-bottom:10px">🔴 Palavra dele: <b id="resImpWord"></b></p>
+            <p>🔵 Palavra Civil: <b id="resCivWord"></b></p>
         </div>
-        <button class="btn-action" onclick="goToPage('Themes')" style="margin-top: 20px;">Nova Rodada</button>
-        <button class="btn-action" style="background: #f1f5f9; color: var(--text-main); box-shadow: none; margin-top: 10px;" onclick="location.reload()">Mudar Jogadores</button>
+        <button class="btn-play" onclick="goToPage('Themes')">
+            Jogar de novo <div class="arrow"><i data-lucide="refresh-cw" size="18"></i></div>
+        </button>
     </div>
+
+    <div class="footer-credits">v 2.0 · criado por davi roberto</div>
 </div>
 
 <script>
     const THEMES = [
-        { id: 'comida', name: 'Comida', icon: 'utensils', pairs: [['pizza', 'esfiha'],['hambúrguer', 'sanduíche'],['macarrão', 'lasanha'],['arroz', 'cuscuz'],['feijão', 'lentilha'],['sorvete', 'iogurte'],['bolo', 'pudim'],['batata frita', 'batata assada'],['sushi', 'temaki'],['chocolate', 'brigadeiro'],['pastel', 'coxinha'],['cachorro-quente', 'misto quente']] },
-        { id: 'profissao', name: 'Profissão', icon: 'briefcase', pairs: [['médico', 'enfermeiro'],['professor', 'tutor'],['policial', 'segurança'],['bombeiro', 'salva-vidas'],['advogado', 'juiz'],['engenheiro', 'arquiteto'],['programador', 'designer'],['dentista', 'ortodontista'],['veterinário', 'biólogo']] },
-        { id: 'animais', name: 'Animais', icon: 'dog', pairs: [['Cachorro', 'Lobo'], ['Gato', 'Pantera'], ['Leão', 'Tigre'], ['Zebra', 'Cavalo'], ['Jacaré', 'Crocodilo'], ['Golfinho', 'Tubarão'], ['Cobra', 'Minhoca'], ['Urso', 'Panda'], ['Macaco', 'Chimpanzé'], ['Sapo', 'Rã']] },
-        { id: 'desenhos', name: 'Desenhos', icon: 'tv', pairs: [['Mickey', 'Minnie'], ['Toy Story', 'Carros'], ['Shrek', 'Madagascar'], ['Ben 10', 'Generator Rex'], ['Bob Esponja', 'Patrick'], ['Scooby-Doo', 'Coragem'], ['Naruto', 'Sasuke'], ['Pokémon', 'Digimon']] },
+        { id: 'comida', name: 'Comida', icon: 'utensils', pairs: [['pizza', 'esfiha'],['hambúrguer', 'sanduíche'],['macarrão', 'lasanha'],['arroz', 'cuscuz'],['feijão', 'lentilha'],['sorvete', 'pudim'],['sushi', 'temaki'],['chocolate', 'brigadeiro'],['pastel', 'coxinha'],['cachorro-quente', 'misto quente']] },
+        { id: 'profissao', name: 'Profissão', icon: 'briefcase', pairs: [['médico', 'enfermeiro'],['professor', 'tutor'],['policial', 'segurança'],['bombeiro', 'salva-vidas'],['advogado', 'juiz'],['engenheiro', 'arquiteto'],['programador', 'designer'],['dentista', 'ortodontista']] },
+        { id: 'animais', name: 'Animais', icon: 'dog', pairs: [['Cachorro', 'Lobo'], ['Gato', 'Pantera'], ['Leão', 'Tigre'], ['Zebra', 'Cavalo'], ['Jacaré', 'Crocodilo'], ['Baleia', 'Golfinho'], ['Cobra', 'Minhoca'], ['Urso', 'Panda'], ['Macaco', 'Chimpanzé'], ['Águia', 'Falcão']] },
+        { id: 'desenhos', name: 'Desenhos', icon: 'tv', pairs: [['Mickey', 'Minnie'], ['Toy Story', 'Carros'], ['Shrek', 'Madagascar'], ['Ben 10', 'Rex'], ['Bob Esponja', 'Patrick'], ['Scooby-Doo', 'Coragem'], ['Naruto', 'Sasuke'], ['Pokémon', 'Digimon']] },
         { id: 'objetos', name: 'Objetos', icon: 'package', pairs: [['Cadeira', 'Banco'], ['Sofá', 'Poltrona'], ['Mesa', 'Escrivaninha'], ['Geladeira', 'Freezer'], ['Fogão', 'Microondas'], ['Televisão', 'Monitor'], ['Mouse', 'Teclado'], ['Notebook', 'Tablet'], ['Celular', 'Iphone']] }
     ];
 
@@ -208,17 +236,17 @@
     const pGrid = document.getElementById('playerGrid');
     for(let i=3; i<=9; i++) {
         const b = document.createElement('div'); b.className='chip'; b.innerText=i;
-        b.onclick = () => { playerCount=i; document.querySelectorAll('.chip').forEach(x=>x.classList.remove('selected')); b.classList.add('selected'); document.getElementById('btnNext2').style.display='block'; };
+        b.onclick = () => { playerCount=i; document.querySelectorAll('.chip').forEach(x=>x.classList.remove('selected')); b.classList.add('selected'); document.getElementById('btnNext2').style.display='flex'; };
         pGrid.appendChild(b);
     }
 
     // Iniciar Temas
     const tGrid = document.getElementById('themesGrid');
     THEMES.forEach(t => {
-        const item = document.createElement('div'); item.className='theme-item';
-        item.innerHTML = `<div class="theme-icon"><i data-lucide="${t.icon}"></i></div><div style="font-weight:700">${t.name}</div>`;
-        item.onclick = () => { selectedTheme=t; document.querySelectorAll('.theme-item').forEach(c=>c.classList.remove('selected')); item.classList.add('selected'); };
-        tGrid.appendChild(item);
+        const card = document.createElement('div'); card.className='theme-card';
+        card.innerHTML = `<i data-lucide="${t.icon}" style="margin-right:15px"></i> ${t.name}`;
+        card.onclick = () => { selectedTheme=t; document.querySelectorAll('.theme-card').forEach(c=>c.classList.remove('selected')); card.classList.add('selected'); };
+        tGrid.appendChild(card);
     });
     lucide.createIcons();
 
@@ -233,7 +261,7 @@
 
     function setupNames() {
         const list = document.getElementById('nameList'); list.innerHTML = '';
-        for(let i=1; i<=playerCount; i++) list.innerHTML += `<div class="input-card"><i data-lucide="user" size="18"></i><input type="text" value="Jogador ${i}" id="pn${i}"></div>`;
+        for(let i=1; i<=playerCount; i++) list.innerHTML += `<div class="input-item"><i data-lucide="user" size="18"></i><input type="text" value="Jogador ${i}" id="pn${i}"></div>`;
         lucide.createIcons();
         goToPage(3);
     }
@@ -264,7 +292,7 @@
         document.getElementById('wordDisplay').innerText = playerList[currentIdx].word;
         document.getElementById('wordDisplay').style.display = 'none';
         document.getElementById('instructionText').style.display = 'block';
-        document.getElementById('revealBtn').innerText = "Ver Palavra";
+        document.getElementById('revealBtn').innerHTML = `Ver <div class="arrow"><i data-lucide="eye" size="18"></i></div>`;
         isShowing = false;
     }
 
@@ -272,7 +300,7 @@
         if(!isShowing) {
             document.getElementById('wordDisplay').style.display = 'block';
             document.getElementById('instructionText').style.display = 'none';
-            document.getElementById('revealBtn').innerText = "Esconder e Passar";
+            document.getElementById('revealBtn').innerHTML = `Esconder <div class="arrow"><i data-lucide="arrow-right" size="18"></i></div>`;
             isShowing = true;
         } else {
             currentIdx++;
@@ -286,8 +314,8 @@
         list.innerHTML = '';
         playerList.forEach(p => {
             const card = document.createElement('div');
-            card.className = 'vote-card';
-            card.innerHTML = `<span>${p.name}</span><span style="color:var(--primary); font-size:12px; font-weight:800">VOTAR</span>`;
+            card.className = 'vote-item';
+            card.innerHTML = `<span>${p.name}</span> <span style="color:#757575; font-size:12px">VOTAR</span>`;
             card.onclick = () => showResult(p.isImpostor);
             list.appendChild(card);
         });
@@ -296,7 +324,6 @@
 
     function showResult(win) {
         document.getElementById('resultVerdict').innerText = win ? "Acertaram!" : "Erraram!";
-        document.getElementById('resultVerdict').style.color = win ? "#10b981" : "#ef4444";
         document.getElementById('resImpName').innerText = impostorInfo.name;
         document.getElementById('resImpWord').innerText = impostorInfo.word.toUpperCase();
         document.getElementById('resCivWord').innerText = impostorInfo.civWord.toUpperCase();
@@ -305,3 +332,4 @@
 </script>
 </body>
 </html>
+  
