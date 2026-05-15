@@ -32,7 +32,6 @@
             padding: 40px 25px; overflow: hidden;
         }
 
-        /* ANIMAÇÕES */
         @keyframes fadeInLogo {
             from { opacity: 0; transform: translateY(-20px); filter: blur(10px); }
             to { opacity: 1; transform: translateY(0); filter: blur(0); }
@@ -44,7 +43,6 @@
         }
         .active { display: flex; }
 
-        /* TELA INICIAL ESTILO INFILTRADO */
         .home-header { text-align: center; margin-bottom: 50px; margin-top: 20px; }
         
         .logo-spy { 
@@ -63,7 +61,6 @@
 
         .tagline { font-size: 10px; letter-spacing: 3px; color: var(--text-dim); text-transform: uppercase; margin-bottom: 40px; }
 
-        /* BOTÕES ESTILO MENU */
         .menu-btn {
             background: rgba(255,255,255,0.03);
             border: 1px solid rgba(255,255,255,0.1);
@@ -78,7 +75,6 @@
         .menu-btn p { font-size: 11px; color: var(--text-dim); }
         .menu-btn .arrow-right { color: var(--text-dim); }
 
-        /* ESTILO DOS CARDS DE JOGO */
         .setup-card {
             background: var(--card-dark); border: 1px solid #333;
             border-radius: 20px; padding: 25px; flex-grow: 1;
@@ -88,7 +84,6 @@
         .nav-top { display: flex; align-items: center; margin-bottom: 30px; color: var(--text-dim); font-size: 12px; cursor: pointer; }
         .nav-top i { margin-right: 8px; }
 
-        /* REVEAL COM SLIDE */
         .reveal-zone {
             position: relative; flex-grow: 1; background: #000; border-radius: 20px;
             margin: 20px 0; overflow: hidden; display: flex; align-items: center; justify-content: center;
@@ -109,6 +104,10 @@
             background: var(--text-main); color: #000; padding: 18px;
             border-radius: 50px; font-weight: 900; border: none; cursor: pointer;
             text-transform: uppercase; letter-spacing: 1px; width: 100%;
+        }
+
+        .btn-outline {
+            background: transparent; color: white; border: 2px solid #333; margin-top: 10px;
         }
 
         .footer-info { text-align: center; font-size: 10px; color: #333; margin-top: 20px; }
@@ -133,7 +132,7 @@
             <div class="arrow-right"><i data-lucide="chevron-right"></i></div>
         </div>
 
-        <div class="menu-btn" onclick="alert('REGRAS: Os Civis recebem uma palavra igual. O Infiltrado recebe uma palavra parecida. Debatam e descubram quem é o infiltrado antes do tempo acabar!')">
+        <div class="menu-btn" onclick="alert('REGRAS: Os Civis recebem uma palavra igual. O Infiltrado recebe uma palavra parecida. Debatam e descubram quem é o infiltrado!')">
             <div class="icon-area"><i data-lucide="book-open"></i></div>
             <div class="text-area">
                 <h3>Como Jogar</h3>
@@ -143,7 +142,7 @@
         </div>
 
         <div style="margin-top: auto; text-align: center; padding-bottom: 20px;">
-            <p style="font-size: 10px; color: #444; letter-spacing: 2px;">V 1.1.0 · DESIGN BY DAVI ROBERTO</p>
+            <p style="font-size: 10px; color: #444; letter-spacing: 2px;">V 1.1.2 · DESIGN BY DAVI ROBERTO</p>
         </div>
     </div>
 
@@ -151,21 +150,13 @@
         <div class="nav-top" onclick="goTo('1')"><i data-lucide="arrow-left"></i> VOLTAR AO MENU</div>
         <div class="setup-card">
             <h2 style="margin-bottom: 20px;">Modo de Jogo</h2>
-            
             <div class="menu-btn" onclick="setMode('classic')">
                 <div class="icon-area"><i data-lucide="users"></i></div>
-                <div class="text-area">
-                    <h3>Clássico</h3>
-                    <p>O infiltrado não sabe que é ele.</p>
-                </div>
+                <div class="text-area"><h3>Clássico</h3><p>Infiltrado não sabe quem é.</p></div>
             </div>
-
             <div class="menu-btn" onclick="setMode('spy')">
                 <div class="icon-area"><i data-lucide="eye" style="color:var(--red-impostor)"></i></div>
-                <div class="text-area">
-                    <h3 style="color:var(--red-impostor)">Modo Espião</h3>
-                    <p>O infiltrado é avisado na tela.</p>
-                </div>
+                <div class="text-area"><h3 style="color:var(--red-impostor)">Modo Espião</h3><p>O infiltrado sabe o seu papel.</p></div>
             </div>
         </div>
     </div>
@@ -182,7 +173,7 @@
     <div id="page3" class="page">
         <div class="nav-top" onclick="goTo('2')"><i data-lucide="arrow-left"></i> JOGADORES</div>
         <div class="setup-card">
-            <h2 style="margin-bottom: 20px;">Identidade</h2>
+            <h2 style="margin-bottom: 20px;">Agentes</h2>
             <div id="nameList" style="overflow-y:auto; flex-grow:1; margin-bottom: 20px;"></div>
             <button class="btn-action" onclick="goTo('Themes')">Escolher Tema</button>
         </div>
@@ -199,16 +190,14 @@
 
     <div id="pageReveal" class="page">
         <p style="color:var(--text-dim); font-size:10px; letter-spacing:2px; text-align:center;">AGENTE EM FOCO</p>
-        <h1 id="revName" style="text-align:center; margin-bottom:20px; transition: color 0.3s;">---</h1>
-        
+        <h1 id="revName" style="text-align:center; margin-bottom:20px;">---</h1>
         <div class="reveal-zone">
             <div id="revWord" style="font-size:32px; font-weight:900; color:white; text-align:center;">---</div>
             <div class="sliding-cover" id="dragCover">
-                <i data-lucide="chevrons-up" style="margin-bottom:10px;"></i>
-                <p style="font-size:12px; font-weight:700; opacity:0.5; text-transform:uppercase;">Arraste para revelar</p>
+                <i data-lucide="chevrons-up"></i>
+                <p style="font-size:12px; font-weight:700; opacity:0.5;">ARRASTE PARA REVELAR</p>
             </div>
         </div>
-
         <button class="btn-action" id="nextPlayerBtn" onclick="nextPlayer()" style="opacity: 0.2; pointer-events: none;">Continuar</button>
     </div>
 
@@ -218,21 +207,23 @@
     </div>
 
     <div id="pageResult" class="page">
-        <h1 id="resTitle" style="text-align:center; margin-bottom:30px;">Status</h1>
-        <div class="setup-card" style="background:#000; border-color:var(--accent-blue);">
+        <h1 id="resTitle" style="text-align:center; margin-bottom:30px;">Fim da Missão</h1>
+        <div class="setup-card" style="background:#000; border-color:var(--accent-blue); max-height: 250px;">
             <p style="color:var(--text-dim); font-size:12px;">O Infiltrado era:</p>
             <h2 id="resImpName" style="color:var(--accent-blue); margin-bottom:20px;">---</h2>
             <p style="font-size:13px; margin-bottom:10px;">Palavra dele: <span id="resImpWord" style="color:white; font-weight:700;"></span></p>
-            <p style="font-size:13px;">Palavra dos Civis: <span id="resCivWord" style="color:white; font-weight:700;"></span></p>
+            <p style="font-size:13px;">Palavra Civis: <span id="resCivWord" style="color:white; font-weight:700;"></span></p>
         </div>
-        <button class="btn-action" style="margin-top:20px;" onclick="goTo('1')">Menu Principal</button>
+        <div style="margin-top: auto;">
+            <button class="btn-action" onclick="startGame()">Jogar Novamente</button>
+            <button class="btn-action btn-outline" onclick="goTo('1')">Menu Principal</button>
+        </div>
     </div>
 
-    <div class="footer-info">v 1.1 · DAVI ROBERTO</div>
+    <div class="footer-info">v 1.1.2 · DAVI ROBERTO</div>
 </div>
 
 <script>
-    // RESTAURAÇÃO DE TODOS OS TEMAS SOLICITADOS
     const THEMES = [
         { name: 'Comida', icon: 'utensils', pairs: [['Pizza', 'Esfiha'],['Hambúrguer', 'Sanduíche'],['Macarrão', 'Lasanha'],['Arroz', 'Cuscuz'],['Feijão', 'Lentilha'],['Sorvete', 'Pudim'],['Sushi', 'Temaki'],['Chocolate', 'Brigadeiro'],['Pastel', 'Coxinha'],['Cachorro-quente', 'Misto Quente']] },
         { name: 'Profissão', icon: 'briefcase', pairs: [['Médico', 'Enfermeiro'],['Professor', 'Tutor'],['Policial', 'Segurança'],['Bombeiro', 'Salva-vidas'],['Advogado', 'Juiz'],['Engenheiro', 'Arquiteto'],['Programador', 'Designer'],['Dentista', 'Ortodontista']] },
@@ -255,12 +246,8 @@
         document.getElementById('page' + p).classList.add('active');
     }
 
-    function setMode(m) { 
-        state.mode = m; 
-        goTo('2'); 
-    }
+    function setMode(m) { state.mode = m; goTo('2'); }
 
-    // SETUP JOGADORES
     const pGrid = document.getElementById('playerGrid');
     for(let i=3; i<=9; i++) {
         const c = document.createElement('div'); c.className='chip'; c.innerText=i;
@@ -283,7 +270,6 @@
         lucide.createIcons(); goTo('3');
     }
 
-    // THEMES
     const tContainer = document.getElementById('themesContainer');
     THEMES.forEach((t) => {
         const d = document.createElement('div'); d.className='menu-btn';
@@ -316,7 +302,6 @@
         goTo('Reveal');
     }
 
-    // DRAG REVEAL (COM MODO ESPIÃO RESTAURADO)
     const dragCover = document.getElementById('dragCover');
     let startY = 0;
     dragCover.addEventListener('touchstart', (e) => { startY = e.touches[0].clientY; });
@@ -340,18 +325,14 @@
         const p = state.list[state.current];
         const wordEl = document.getElementById('revWord');
         const nameEl = document.getElementById('revName');
-        
         nameEl.innerText = p.name;
-        
-        // LÓGICA DO MODO ESPIÃO SALVA!
         if(state.mode === 'spy' && p.isImp) {
             nameEl.style.color = 'var(--red-impostor)';
-            wordEl.innerHTML = `<span style="font-size:12px; color:var(--red-impostor); font-weight:900; letter-spacing:1px; text-transform:uppercase;">Você é o infiltrado</span><br>${p.word}`;
+            wordEl.innerHTML = `<span style="font-size:12px; color:var(--red-impostor); font-weight:900;">Você é o infiltrado</span><br>${p.word}`;
         } else { 
             nameEl.style.color = 'white';
             wordEl.innerText = p.word; 
         }
-
         dragCover.style.transform = `translateY(0)`;
         document.getElementById('nextPlayerBtn').style.opacity = "0.2";
         document.getElementById('nextPlayerBtn').style.pointerEvents = "none";
@@ -386,6 +367,8 @@
 </script>
 </body>
 </html>
+
+
 
 
 
