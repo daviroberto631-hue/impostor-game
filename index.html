@@ -142,7 +142,7 @@
         </div>
 
         <div style="margin-top: auto; text-align: center; padding-bottom: 20px;">
-            <p style="font-size: 10px; color: #444; letter-spacing: 2px;">V 1.1.2 · DESIGN BY DAVI ROBERTO</p>
+            <p style="font-size: 10px; color: #444; letter-spacing: 2px;">V 1.1.5 · DESIGN BY DAVI ROBERTO</p>
         </div>
     </div>
 
@@ -195,10 +195,10 @@
             <div id="revWord" style="font-size:32px; font-weight:900; color:white; text-align:center;">---</div>
             <div class="sliding-cover" id="dragCover">
                 <i data-lucide="chevrons-up"></i>
-                <p style="font-size:12px; font-weight:700; opacity:0.5;">ARRASTE PARA REVELAR</p>
+                <p style="font-size:12px; font-weight:700; opacity:0.5; letter-spacing: 1px;">ARRASTE PARA REVELAR</p>
             </div>
         </div>
-        <button class="btn-action" id="nextPlayerBtn" onclick="nextPlayer()" style="opacity: 0.2; pointer-events: none;">Continuar</button>
+        <button class="btn-action" id="nextPlayerBtn" onclick="triggerNextPlayerTransition()" style="opacity: 0.2; pointer-events: none;">Continuar</button>
     </div>
 
     <div id="pageVote" class="page">
@@ -220,7 +220,7 @@
         </div>
     </div>
 
-    <div class="footer-info">v 1.1.2 · DAVI ROBERTO</div>
+    <div class="footer-info">v 1.1.5 · DAVI ROBERTO</div>
 </div>
 
 <script>
@@ -302,6 +302,7 @@
         goTo('Reveal');
     }
 
+    // LÓGICA DE DRAG
     const dragCover = document.getElementById('dragCover');
     let startY = 0;
     dragCover.addEventListener('touchstart', (e) => { startY = e.touches[0].clientY; });
@@ -309,23 +310,29 @@
         let distY = e.touches[0].clientY - startY;
         if(distY < 0) {
             dragCover.style.transform = `translateY(${distY}px)`;
-            if(Math.abs(distY) > 150) {
+            if(Math.abs(distY) > 140) {
                 document.getElementById('nextPlayerBtn').style.opacity = "1";
                 document.getElementById('nextPlayerBtn').style.pointerEvents = "auto";
             }
         }
     });
     dragCover.addEventListener('touchend', () => {
-        if(parseInt(dragCover.style.transform.replace(/[^\d.-]/g, '')) > -150) {
+        if(parseInt(dragCover.style.transform.replace(/[^\d.-]/g, '')) > -140) {
             dragCover.style.transform = `translateY(0)`;
-        } else { dragCover.style.transform = `translateY(-110%)`; }
+            document.getElementById('nextPlayerBtn').style.opacity = "0.2";
+            document.getElementById('nextPlayerBtn').style.pointerEvents = "none";
+        } else { 
+            dragCover.style.transform = `translateY(-110%)`; 
+        }
     });
 
     function prepReveal() {
         const p = state.list[state.current];
         const wordEl = document.getElementById('revWord');
         const nameEl = document.getElementById('revName');
+        
         nameEl.innerText = p.name;
+        
         if(state.mode === 'spy' && p.isImp) {
             nameEl.style.color = 'var(--red-impostor)';
             wordEl.innerHTML = `<span style="font-size:12px; color:var(--red-impostor); font-weight:900;">Você é o infiltrado</span><br>${p.word}`;
@@ -333,15 +340,32 @@
             nameEl.style.color = 'white';
             wordEl.innerText = p.word; 
         }
+
+        // Garante que a capa está fechada antes do jogador olhar
         dragCover.style.transform = `translateY(0)`;
         document.getElementById('nextPlayerBtn').style.opacity = "0.2";
         document.getElementById('nextPlayerBtn').style.pointerEvents = "none";
     }
 
-    function nextPlayer() {
-        state.current++;
-        if(state.current < state.list.length) prepReveal();
-        else showVote();
+    // AJUSTE SEGURO: Fecha a capa primeiro, apaga o texto antigo e só depois atualiza
+    function triggerNextPlayerTransition() {
+        // 1. Bloqueia o botão imediatamente
+        document.getElementById('nextPlayerBtn').style.pointerEvents = "none";
+        document.getElementById('nextPlayerBtn').style.opacity = "0.2";
+        
+        // 2. Fecha a capa de volta por cima da palavra velha
+        dragCover.style.transform = `translateY(0)`;
+        
+        // 3. Aguarda 250ms (o tempo da capa fechar) para limpar tudo e passar o turno
+        setTimeout(() => {
+            document.getElementById('revWord').innerText = "---"; // Reseta o texto antigo por segurança
+            state.current++;
+            if(state.current < state.list.length) {
+                prepReveal();
+            } else { 
+                showVote(); 
+            }
+        }, 250);
     }
 
     function showVote() {
@@ -367,6 +391,7 @@
 </script>
 </body>
 </html>
+
 
 
 
